@@ -1,4 +1,4 @@
-module DataMapper
+module Inflector
   Inflector::Inflections.instance.instance_eval do
     plural(/$/, 's')
     plural(/s$/i, 's')
