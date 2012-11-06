@@ -197,7 +197,7 @@ describe Inflector, '.pluralize' do
   }
 
   SingularToPlural.each do |singular, plural|
-    pending "pluralizes #{singular} => #{plural}" do
+    it "pluralizes #{singular} => #{plural}" do
       Inflector.pluralize(singular).should eql(plural)
     end
   end
