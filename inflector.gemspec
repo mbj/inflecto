@@ -3,11 +3,11 @@
 Gem::Specification.new do |gem|
   gem.name        = 'inflector'
   gem.version     = '0.0.1'
-  gem.authors     = ['Dan Kubb'] # Will be added when under datamapper org
-  gem.email       = %w[dan.kubb@gmail.com] # Same as above
+  gem.authors     = ['The rails, merb & datamapper team', 'Markus Schirp']
+  gem.email       = ['mbj@seonic.net']
   gem.description = 'Inflector for strings'
   gem.summary     = gem.description
-  gem.homepage    = 'https://github.com/mbj/inflector' # Temporal location
+  gem.homepage    = 'https://github.com/mbj/inflector' 
 
   gem.require_paths    = %w[lib]
   gem.files            = `git ls-files`.split($/)
