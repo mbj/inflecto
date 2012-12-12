@@ -22,6 +22,7 @@ module Inflector
   # though there are cases where that does not hold:
   #
   #   "SSLError".underscore.camelize # => "SslError"
+  #
   def self.camelize(lower_case_and_underscored_word, first_letter_in_uppercase = true)
     if first_letter_in_uppercase
       lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
@@ -232,7 +233,7 @@ module Inflector
   #   "egg_and_ham".tableize     # => "egg_and_hams"
   #   "fancyCategory".tableize   # => "fancy_categories"
   def self.tableize(class_name)
-    pluralize(underscore(class_name))
+    pluralize(underscore(class_name).gsub('/','_'))
   end
 
   # Create a class name from a plural table name like Rails does for table names to models.
