@@ -26,7 +26,8 @@ LongParameterList:
   enabled: true
   overrides: {}
 FeatureEnvy:
-  exclude: []
+  exclude: 
+  - Inflector::Inflections#irregular
   enabled: true
 ClassVariable:
   exclude: []
@@ -50,14 +51,16 @@ NestedIterators:
   enabled: true
   max_allowed_nesting: 2
 LongMethod:
-  max_statements: 6
-  exclude: []
+  max_statements: 8
+  exclude: 
+  - Inflector::Inflections#irregular
   enabled: true
 Duplication:
   allow_calls: []
-  exclude: []
+  exclude: 
+  - Inflector::Inflections#irregular
   enabled: true
-  max_calls: 1
+  max_calls: 2
 UtilityFunction:
   max_helper_calls: 1
   exclude: []
@@ -76,9 +79,10 @@ UncommunicativeVariableName:
 SimulatedPolymorphism:
   exclude: []
   enabled: true
-  max_ifs: 1
+  max_ifs: 2
 DataClump:
-  exclude: []
+  exclude: 
+  - [replacement, rule]
   enabled: true
   max_copies: 2
   min_clump_size: 2

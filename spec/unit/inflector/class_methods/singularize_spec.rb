@@ -142,7 +142,7 @@ describe Inflector, '#singular' do
   }
 
   PENDING.each do |plural, singular|
-    pending "mssing rule or exception for #{plural} => #{singular}"
+    pending "missing rule or exception for #{plural} => #{singular}"
   end
 
   PLURAL_TO_SINGULAR.each do |plural, singular|
