@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Inflector, '.tableize' do
+describe Inflector, '.tabelize' do
   it 'pluralizes last word in snake_case strings: fancy_category => fancy_categories' do
     Inflector.tableize('fancy_category').should == 'fancy_categories'
   end
