@@ -5,9 +5,11 @@ inflector
 [![Dependency Status](https://gemnasium.com/mbj/inflector.png)](https://gemnasium.com/mbj/inflector)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mbj/inflector)
 
-This is a standalone inflector ripped out from [dm-core](https://github.com/datamapper/dm-core) 
-The dm-core inflector originated from [extlib](https://github.com/datamapper/extlib) 
-The extlib inflector originated from [active_support](https://github.com/rails/rails) 
+This is a standalone inflector ripped out from [dm-core](https://github.com/datamapper/dm-core)
+
+The dm-core inflector originated from [extlib](https://github.com/datamapper/extlib)
+
+The extlib inflector originated from [active_support](https://github.com/rails/rails)
 
 Installation
 ------------
