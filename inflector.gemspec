@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |gem|
-  gem.name        = 'inflector'
+  gem.name        = 'mbj-inflector'
   gem.version     = '0.0.1'
   gem.authors     = ['The rails, merb & datamapper team', 'Markus Schirp']
   gem.email       = ['mbj@seonic.net']
