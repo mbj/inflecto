@@ -2,7 +2,7 @@ source :rubygems
 
 gemspec
 
-gem 'inflector', :path => '.'
+gem 'mbj-inflector', :path => '.'
 
 group :development do
   gem 'devtools', :github => 'datamapper/devtools'
