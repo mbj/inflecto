@@ -14,42 +14,121 @@ module Inflector
   # New rules are added at the top. So in the example above, the irregular rule for octopus will now be the first of the
   # pluralization and singularization rules that is runs. This guarantees that your rules run before any of the rules that may
   # already have been loaded.
+  #
   class Inflections
+
+    # Return instance
+    #
+    # @return [Inflections]
+    #
+    # @api private
+    #
     def self.instance
       @__instance__ ||= new
     end
 
-    attr_reader :plurals, :singulars, :uncountables, :humans
+    # Return plurals
+    #
+    # @return [Array]
+    #
+    # @api private
+    #
+    attr_reader :plurals
+    
+    # Return singulars
+    #
+    # @return [Array]
+    #
+    # @api private
+    #
+    attr_reader :singulars
+    
+    # Return uncountables
+    #
+    # @return [Array]
+    #
+    # @api private
+    #
+    attr_reader :uncountables
+    
+    # Return humans
+    #
+    # @return [Array]
+    #
+    # @api private
+    #
+    #
+    attr_reader :humans
 
+    # Initialize object
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
     def initialize
       @plurals, @singulars, @uncountables, @humans = [], [], [], []
     end
 
+    # Add a new plural role
+    #
     # Specifies a new pluralization rule and its replacement. The rule can either be a string or a regular expression.
     # The replacement should always be a string that may include references to the matched data from the rule.
+    #
+    # @param [String, Regexp] rule
+    # @param [String, Regexp] replacement
+    #
+    # @return [self]
+    #
+    # @api private
+    #
     def plural(rule, replacement)
       @uncountables.delete(rule) if rule.is_a?(String)
       @uncountables.delete(replacement)
       @plurals.insert(0, [rule, replacement])
+      self
     end
 
+    # Add a new singular rule
+    #
     # Specifies a new singularization rule and its replacement. The rule can either be a string or a regular expression.
     # The replacement should always be a string that may include references to the matched data from the rule.
+    #
+    # @param [String, Regexp] rule
+    # @param [String, Regexp] replacement
+    #
+    # @return [self]
+    #
+    # @api private
+    #
     def singular(rule, replacement)
       @uncountables.delete(rule) if rule.is_a?(String)
       @uncountables.delete(replacement)
       @singulars.insert(0, [rule, replacement])
+      self
     end
 
+    # Add a new irregular pluralization
+    #
     # Specifies a new irregular that applies to both pluralization and singularization at the same time. This can only be used
     # for strings, not regular expressions. You simply pass the irregular in singular and plural form.
     #
-    # Examples:
-    #   irregular 'octopus', 'octopi'
-    #   irregular 'person', 'people'
+    # @example
+    #
+    #   Inflector.irregular('octopus', 'octopi')
+    #   Inflector.irregular('person', 'people')
+    #
+    # @param [String] singular
+    # @param [String] plural
+    #
+    # @return [self]
+    #
+    # @api private
+    #
     def irregular(singular, plural)
       @uncountables.delete(singular)
       @uncountables.delete(plural)
+
       if singular[0,1].upcase == plural[0,1].upcase
         plural(Regexp.new("(#{singular[0,1]})#{singular[1..-1]}$", "i"), '\1' + plural[1..-1])
         plural(Regexp.new("(#{plural[0,1]})#{plural[1..-1]}$", "i"), '\1' + plural[1..-1])
@@ -62,43 +141,66 @@ module Inflector
         singular(Regexp.new("#{plural[0,1].upcase}(?i)#{plural[1..-1]}$"), singular[0,1].upcase + singular[1..-1])
         singular(Regexp.new("#{plural[0,1].downcase}(?i)#{plural[1..-1]}$"), singular[0,1].downcase + singular[1..-1])
       end
+      self
     end
 
-    # Add uncountable words that shouldn't be attempted inflected.
+    # Add uncountable words 
     #
-    # Examples:
-    #   uncountable "money"
-    #   uncountable "money", "information"
-    #   uncountable %w( money information rice )
-    def uncountable(*words)
-      (@uncountables << words).flatten!
+    # Uncountable will not be inflected
+    #
+    # @example
+    #
+    #   Inflector.uncountable "money"
+    #   Inflector.uncountable "money", "information"
+    #   Inflector.uncountable %w( money information rice )
+    #
+    # @param [Enumerable<String>] words
+    #
+    # @return [self]
+    #
+    # @api private
+    #
+    def uncountable(words)
+      @uncountables.concat(words)
+      self
     end
 
+    # Add humanize rule
+    #
     # Specifies a humanized form of a string by a regular expression rule or by a string mapping.
     # When using a regular expression based replacement, the normal humanize formatting is called after the replacement.
     # When a string is used, the human form should be specified as desired (example: 'The name', not 'the_name')
     #
-    # Examples:
-    #   human /_cnt$/i, '\1_count'
-    #   human "legacy_col_person_name", "Name"
+    # @example
+    #   Inflector.human(/_cnt$/i, '\1_count')
+    #   Inflector.human("legacy_col_person_name", "Name")
+    #
+    # @param [String, Regexp] rule
+    # @param [String, Regexp] replacement
+    #
+    # @api private
+    #
+    # @return [self]
+    #
     def human(rule, replacement)
       @humans.insert(0, [rule, replacement])
+      self
     end
 
-    # Clears the loaded inflections within a given scope (default is <tt>:all</tt>).
-    # Give the scope as a symbol of the inflection type, the options are: <tt>:plurals</tt>,
-    # <tt>:singulars</tt>, <tt>:uncountables</tt>, <tt>:humans</tt>.
+    # Clear all inflection rules
     #
-    # Examples:
-    #   clear :all
-    #   clear :plurals
-    def clear(scope = :all)
-      case scope
-        when :all
-          @plurals, @singulars, @uncountables = [], [], []
-        else
-          instance_variable_set "@#{scope}", []
-      end
+    # @example
+    #
+    #   Inflector.clear
+    #
+    # @return [self]
+    #
+    # @api private
+    #
+    def clear
+      initialize
+      self
     end
+
   end
 end

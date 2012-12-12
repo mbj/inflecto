@@ -7,44 +7,41 @@
 # If you discover an incorrect inflection and require it for your application, you'll need
 # to correct it yourself (explained below).
 module Inflector
-  # By default, +camelize+ converts strings to UpperCamelCase. If the argument to +camelize+
-  # is set to <tt>:lower</tt> then +camelize+ produces lowerCamelCase.
+
+  # Convert input to UpperCamelCase
   #
-  # +camelize+ will also convert '/' to '::' which is useful for converting paths to namespaces.
+  # Will also convert '/' to '::' which is useful for converting paths to namespaces.
   #
-  # Examples:
-  #   "active_record".camelize                # => "ActiveRecord"
-  #   "active_record".camelize(:lower)        # => "activeRecord"
-  #   "active_record/errors".camelize         # => "ActiveRecord::Errors"
-  #   "active_record/errors".camelize(:lower) # => "activeRecord::Errors"
+  # @param [String] input
   #
-  # As a rule of thumb you can think of +camelize+ as the inverse of +underscore+,
-  # though there are cases where that does not hold:
+  # @example
+  #   Inflector.camelize("data_mapper")        # => "DataMapper"
+  #   Inflector.camelize("data_mapper/errors") # => "DataMApper::Errors"
   #
-  #   "SSLError".underscore.camelize # => "SslError"
+  # @return [String]
+  # 
+  # @api public
   #
-  def self.camelize(lower_case_and_underscored_word, first_letter_in_uppercase = true)
-    if first_letter_in_uppercase
-      lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
-    else
-      lower_case_and_underscored_word.to_s[0].chr.downcase + camelize(lower_case_and_underscored_word)[1..-1]
-    end
+  def self.camelize(input)
+    input.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
   end
 
-  # Makes an underscored, lowercase form from the expression in the string.
+  # Convert input to underscored, lowercase string 
   #
   # Changes '::' to '/' to convert namespaces to paths.
   #
-  # Examples:
-  #   "ActiveRecord".underscore         # => "active_record"
-  #   "ActiveRecord::Errors".underscore # => active_record/errors
+  # @param [String] input
   #
-  # As a rule of thumb you can think of +underscore+ as the inverse of +camelize+,
-  # though there are cases where that does not hold:
+  # @example
+  #   Inflector.underscore("DataMapper")         # => "data_mapper"
+  #   Inflector.underscore("DataMapper::Errors") # => "data_mapper/errors"
   #
-  #   "SSLError".underscore.camelize # => "SslError"
-  def self.underscore(camel_cased_word)
-    word = camel_cased_word.to_s.dup
+  # @return [String]
+  #
+  # @api public
+  #
+  def self.underscore(input)
+    word = input.to_s.dup
     word.gsub!(/::/, '/')
     word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
     word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
@@ -53,86 +50,101 @@ module Inflector
     word
   end
 
-  # Replaces underscores with dashes in the string.
+  # Convert input underscores to dashes 
   #
-  # Example:
-  #   "puni_puni" # => "puni-puni"
-  def self.dasherize(underscored_word)
-    underscored_word.gsub(/_/, '-')
+  # @param [String] input
+  #
+  # @example
+  #   Inflector.dasherize("foo_bar") # => "foo-bar"
+  #
+  # @return [String]
+  #
+  # @api public
+  #
+  def self.dasherize(input)
+    input.gsub(/_/, '-')
   end
 
-  # Removes the module part from the expression in the string.
+  # Return unscoped constant name
   #
-  # Examples:
-  #   "ActiveRecord::CoreExtensions::String::Inflections".demodulize # => "Inflections"
-  #   "Inflections".demodulize                                       # => "Inflections"
-  def self.demodulize(class_name_in_module)
-    class_name_in_module.to_s.gsub(/^.*::/, '')
+  # @param [String] input
+  #
+  # @example
+  #
+  #   Inflector.demodulize("DataMapper::Error") # => "Error"
+  #   Inflector.demodulize("DataMapper")        # => "DataMapper"
+  #
+  # @return [String]
+  #
+  # @api public
+  #
+  def self.demodulize(input)
+    input.to_s.gsub(/^.*::/, '')
   end
 
-  # Creates a foreign key name from a class name.
-  # +separate_class_name_and_id_with_underscore+ sets whether
-  # the method should put '_' between the name and 'id'.
+  # Creates a foreign key name 
   #
-  # Examples:
-  #   "Message".foreign_key        # => "message_id"
-  #   "Message".foreign_key(false) # => "messageid"
-  #   "Admin::Post".foreign_key    # => "post_id"
-  def self.foreign_key(class_name, separate_class_name_and_id_with_underscore = true)
-    underscore(demodulize(class_name)) + (separate_class_name_and_id_with_underscore ? "_id" : "id")
+  # @param [String] input
+  #
+  # @example
+  #
+  #   Inflector.foreign_key("Message) => "message_id"
+  #
+  # @return [String]
+  #
+  # @api private
+  #
+  def self.foreign_key(input)
+    "#{underscore(demodulize(input))}_id"
   end
 
-  # Ruby 1.9 introduces an inherit argument for Module#const_get and
-  # #const_defined? and changes their default behavior.
-  if Module.method(:const_get).arity == 1
-    # Tries to find a constant with the name specified in the argument string:
-    #
-    #   "Module".constantize     # => Module
-    #   "Test::Unit".constantize # => Test::Unit
-    #
-    # The name is assumed to be the one of a top-level constant, no matter whether
-    # it starts with "::" or not. No lexical context is taken into account:
-    #
-    #   C = 'outside'
-    #   module M
-    #     C = 'inside'
-    #     C               # => 'inside'
-    #     "C".constantize # => 'outside', same as ::C
-    #   end
-    #
-    # NameError is raised when the name is not in CamelCase or the constant is
-    # unknown.
-    def self.constantize(camel_cased_word)
-      names = camel_cased_word.split('::')
-      names.shift if names.empty? || names.first.empty?
+  # Find a constant with the name specified in the argument string
+  #
+  # The name is assumed to be the one of a top-level constant, constant scope of caller is igored
+  #
+  # @param [String] input
+  #
+  # @example
+  #
+  #   Inflector.constantize("Module")            # => Module
+  #   Inflector.constantize("DataMapper::Error") # => Test::Unit
+  #
+  # @return [Class, Module]
+  #
+  # @api private
+  #
+  def self.constantize(input)
+    names = input.split('::')
+    names.shift if names.empty? || names.first.empty?
 
-      constant = Object
-      names.each do |name|
+    constant = Object
+    names.each do |name|
+      # Ruby 1.9 introduces an inherit argument for Module#const_get and
+      # #const_defined? and changes their default behavior.
+      if Module.method(:const_get).arity == 1
         constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
-      end
-      constant
-    end
-  else
-    def self.constantize(camel_cased_word) #:nodoc:
-      names = camel_cased_word.split('::')
-      names.shift if names.empty? || names.first.empty?
-
-      constant = Object
-      names.each do |name|
+      else
         constant = constant.const_defined?(name, false) ? constant.const_get(name) : constant.const_missing(name)
       end
-      constant
     end
+    constant
   end
 
-  # Turns a number into an ordinal string used to denote the position in an
-  # ordered sequence such as 1st, 2nd, 3rd, 4th.
+  # Convert a number into an ordinal string 
   #
-  # Examples:
+  # @param [Fixnum] number
+  #
+  # @example
+  #
   #   ordinalize(1)     # => "1st"
   #   ordinalize(2)     # => "2nd"
   #   ordinalize(1002)  # => "1002nd"
   #   ordinalize(1003)  # => "1003rd"
+  #
+  # @return [String]
+  #
+  # @api private
+  #
   def self.ordinalize(number)
     if (11..13).include?(number.to_i % 100)
       "#{number}th"
@@ -146,13 +158,18 @@ module Inflector
     end
   end
 
-  # Yields a singleton instance of Inflector::Inflections so you can specify additional
-  # inflector rules.
+  # Yields a singleton instance of Inflector::Inflections 
   #
-  # Example:
+  # @example
+  #
   #   Inflector.inflections do |inflect|
   #     inflect.uncountable "rails"
   #   end
+  #
+  # @return [Inflector::Inflections]
+  #
+  # @api public
+  #
   def self.inflections
     if block_given?
       yield Inflections.instance
@@ -161,18 +178,26 @@ module Inflector
     end
   end
 
-  # Returns the plural form of the word in the string.
+  # Convert input word string to plural 
   #
-  # Examples:
-  #   "post".pluralize             # => "posts"
-  #   "octopus".pluralize          # => "octopi"
-  #   "sheep".pluralize            # => "sheep"
-  #   "words".pluralize            # => "words"
-  #   "CamelOctopus".pluralize     # => "CamelOctopi"
+  # @param [String] word
+  #
+  # @example
+  #
+  #   Inflector.pluralize("post")         # => "posts"
+  #   Inflector.pluralize("octopus")      # => "octopi"
+  #   Inflector.pluralize("sheep")        # => "sheep"
+  #   Inflector.pluralize("words")        # => "words"
+  #   Inflector.pluralize("CamelOctopus") # => "CamelOctopi"
+  #
+  # @return [String]
+  #
+  # @api public
+  #
   def self.pluralize(word)
     result = word.to_s.dup
 
-    if word.empty? || inflections.uncountables.include?(result.downcase)
+    if result.empty? || inflections.uncountables.include?(result.downcase)
       result
     else
       inflections.plurals.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
@@ -180,14 +205,22 @@ module Inflector
     end
   end
 
-  # The reverse of +pluralize+, returns the singular form of a word in a string.
+  # Convert word to singular
   #
-  # Examples:
-  #   "posts".singularize            # => "post"
-  #   "octopi".singularize           # => "octopus"
-  #   "sheep".singularize            # => "sheep"
-  #   "word".singularize             # => "word"
-  #   "CamelOctopi".singularize      # => "CamelOctopus"
+  # @param [String] word
+  #
+  # @example
+  #
+  #   Inflector.singularize("posts") # => "post"
+  #   Inflector.singularize("octopi") # => "octopus"
+  #   Inflector.singularize("sheep") # => "sheep"
+  #   Inflector.singularize("word") # => "word"
+  #   Inflector.singularize("CamelOctopi") # => "CamelOctopus"
+  #
+  # @return [String]
+  #
+  # @api public
+  #
   def self.singularize(word)
     result = word.to_s.dup
 
@@ -199,57 +232,75 @@ module Inflector
     end
   end
 
-  # Capitalizes the first word and turns underscores into spaces and strips a
-  # trailing "_id", if any. Like +titleize+, this is meant for creating pretty output.
+  # Humanize string
   #
-  # Examples:
-  #   "employee_salary" # => "Employee salary"
-  #   "author_id"       # => "Author"
-  def self.humanize(lower_case_and_underscored_word)
-    result = lower_case_and_underscored_word.to_s.dup
+  # @param [String] input
+  #
+  # capitalizes the first word and turns underscores into spaces and strips a # trailing "_id", if any. 
+  # Like +titleize+, this is meant for creating pretty output.
+  #
+  # @example
+  #
+  #   Inflector.humanize("employee_salary") # => "Employee salary"
+  #   Inflector.humanize("author_id")       # => "Author"
+  #
+  # @return [String]
+  #
+  # @api private
+  #
+  def self.humanize(input)
+    result = input.to_s.dup
 
     inflections.humans.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
     result.gsub(/_id$/, "").gsub(/_/, " ").capitalize
   end
 
-  # Capitalizes all the words and replaces some characters in the string to create
-  # a nicer looking title. +titleize+ is meant for creating pretty output. It is not
-  # used in the Rails internals.
+
+  # Tabelize input string 
   #
-  # +titleize+ is also aliased as as +titlecase+.
+  # @param [String] input
   #
-  # Examples:
-  #   "man from the boondocks".titleize # => "Man From The Boondocks"
-  #   "x-men: the last stand".titleize  # => "X Men: The Last Stand"
-  def self.titleize(word)
-    humanize(underscore(word)).gsub(/\b('?[a-z])/) { $1.capitalize }
+  # Create the name of a table like Rails does for models to table names. 
+  # This method # uses the +pluralize+ method on the last word in the string.
+  #
+  # @example
+  #
+  #   Inflector.tabelize("RawScaledScorer") # => "raw_scaled_scorers"
+  #   Inflector.tabelize("egg_and_ham")     # => "egg_and_hams"
+  #   Inflector.tabelize("fancyCategory")   # => "fancy_categories"
+  #
+  # @return [String]
+  #
+  # @api private
+  #
+  def self.tableize(input)
+    pluralize(underscore(input).gsub('/','_'))
   end
 
-  # Create the name of a table like Rails does for models to table names. This method
-  # uses the +pluralize+ method on the last word in the string.
+  # Classify input 
   #
-  # Examples
-  #   "RawScaledScorer".tableize # => "raw_scaled_scorers"
-  #   "egg_and_ham".tableize     # => "egg_and_hams"
-  #   "fancyCategory".tableize   # => "fancy_categories"
-  def self.tableize(class_name)
-    pluralize(underscore(class_name).gsub('/','_'))
-  end
-
   # Create a class name from a plural table name like Rails does for table names to models.
-  # Note that this returns a string and not a Class. (To convert to an actual class
-  # follow +classify+ with +constantize+.)
+  # Note that this returns a string and not a Class. 
   #
-  # Examples:
-  #   "egg_and_hams".classify # => "EggAndHam"
-  #   "posts".classify        # => "Post"
+  # To convert to an actual class # follow +classify+ with +constantize+.
   #
-  # Singular names are not handled correctly:
-  #   "business".classify     # => "Busines"
+  # @examples:
+  #
+  #   Inflector.classify("egg_and_hams") # => "EggAndHam"
+  #   Inflector.classify("posts")        # => "Post"
+  #
+  #   # Singular names are not handled correctly:
+  #   Inflector.classify("business")     # => "Busines"
+  #
+  # @return [String]
+  #
+  # @api private
+  #
   def self.classify(table_name)
     # strip out any leading schema name
     camelize(singularize(table_name.to_s.sub(/.*\./, '')))
   end
+
 end
 
 require 'inflector/inflections'
