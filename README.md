@@ -5,18 +5,14 @@ inflector
 [![Dependency Status](https://gemnasium.com/mbj/inflector.png)](https://gemnasium.com/mbj/inflector)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mbj/inflector)
 
-This is a small standalone inflector ripped out from [dm-core](https://github.com/datamapper/dm-core)
+This is a standalone inflector ripped out from [dm-core](https://github.com/datamapper/dm-core)
+The dm-core inflector originated from [extlib](https://github.com/datamapper/extlib) 
+The extlib inflector originated from [active_support](https://github.com/rails/rails)
 
 Installation
 ------------
 
-There is no gem release yet so use git source.
-
-In your **Gemfile**:
-
-``` ruby
-gem 'inflector', :git => 'https://github.com/mbj/inflector.git'
-```
+Install the gem ```inflector``` via your preferred method.
 
 Examples
 --------
@@ -25,6 +21,10 @@ Soon.
 
 Credits
 -------
+
+The rails, merb & datamapper team
+
+The current maintainer is Markus Schirp ([mbj](https://github.com/mbj))
 
 Contributing
 -------------
@@ -41,23 +41,4 @@ Contributing
 License
 -------
 
-Copyright (c) 2009-2012 Dan Kubb
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+See LICENSE for details
