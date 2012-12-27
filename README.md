@@ -1,5 +1,5 @@
-inflector
-=========
+mbj-inflector
+=============
 
 [![Build Status](https://secure.travis-ci.org/mbj/inflector.png)](http://travis-ci.org/mbj/inflector)
 [![Dependency Status](https://gemnasium.com/mbj/inflector.png)](https://gemnasium.com/mbj/inflector)
@@ -14,7 +14,7 @@ The extlib inflector originated from [active_support](https://github.com/rails/r
 Installation
 ------------
 
-Install the gem ```inflector``` via your preferred method.
+Install the gem ```mbj-inflector``` via your preferred method.
 
 Examples
 --------
