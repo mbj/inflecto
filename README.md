@@ -1,20 +1,20 @@
-mbj-inflector
-=============
+inflecto
+========
 
-[![Build Status](https://secure.travis-ci.org/mbj/inflector.png)](http://travis-ci.org/mbj/inflector)
-[![Dependency Status](https://gemnasium.com/mbj/inflector.png)](https://gemnasium.com/mbj/inflector)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mbj/inflector)
+[![Build Status](https://secure.travis-ci.org/mbj/inflecto.png)](http://travis-ci.org/mbj/inflecto)
+[![Dependency Status](https://gemnasium.com/mbj/inflecto.png)](https://gemnasium.com/mbj/inflecto)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mbj/inflecto)
 
-This is a standalone inflector ripped out from [dm-core](https://github.com/datamapper/dm-core)
+This is a standalone inflecto ripped out from [dm-core](https://github.com/datamapper/dm-core)
 
-The dm-core inflector originated from [extlib](https://github.com/datamapper/extlib)
+The dm-core inflecto originated from [extlib](https://github.com/datamapper/extlib)
 
-The extlib inflector originated from [active_support](https://github.com/rails/rails)
+The extlib inflecto originated from [active_support](https://github.com/rails/rails)
 
 Installation
 ------------
 
-Install the gem ```mbj-inflector``` via your preferred method.
+Install the gem ```inflecto``` via your preferred method.
 
 Examples
 --------

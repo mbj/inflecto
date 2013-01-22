@@ -303,5 +303,5 @@ module Inflecto
 
 end
 
-require 'inflector/inflections'
-require 'inflector/defaults'
+require 'inflecto/inflections'
+require 'inflecto/defaults'
