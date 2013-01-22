@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Inflector do
+describe Inflecto do
   describe '.demodulize' do
-    it 'demodulizes module name: DataMapper::Inflector => Inflector' do
-      Inflector.demodulize('DataMapper::Inflector').should == 'Inflector'
+    it 'demodulizes module name: DataMapper::Inflecto => Inflecto' do
+      Inflecto.demodulize('DataMapper::Inflecto').should == 'Inflector'
     end
 
     it 'demodulizes module name: A::B::C::D::E => E' do
-      Inflector.demodulize('A::B::C::D::E').should == 'E'
+      Inflecto.demodulize('A::B::C::D::E').should == 'E'
     end
   end
 end

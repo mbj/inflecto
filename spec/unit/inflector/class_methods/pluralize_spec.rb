@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Inflector, '.pluralize' do
+describe Inflecto, '.pluralize' do
 
   SINGULAR_TO_PLURAL = {
     'equipment'    => 'equipment',
@@ -187,7 +187,7 @@ describe Inflector, '.pluralize' do
 
   SINGULAR_TO_PLURAL.each do |singular, plural|
     it "pluralizes #{singular} => #{plural}" do
-      Inflector.pluralize(singular).should eql(plural)
+      Inflecto.pluralize(singular).should eql(plural)
     end
   end
 

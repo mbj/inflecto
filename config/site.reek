@@ -27,7 +27,7 @@ LongParameterList:
   overrides: {}
 FeatureEnvy:
   exclude: 
-  - Inflector::Inflections#irregular
+  - Inflecto::Inflections#irregular
   enabled: true
 ClassVariable:
   exclude: []
@@ -53,12 +53,12 @@ NestedIterators:
 LongMethod:
   max_statements: 8
   exclude: 
-  - Inflector::Inflections#irregular
+  - Inflecto::Inflections#irregular
   enabled: true
 Duplication:
   allow_calls: []
   exclude: 
-  - Inflector::Inflections#irregular
+  - Inflecto::Inflections#irregular
   enabled: true
   max_calls: 2
 UtilityFunction:

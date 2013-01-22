@@ -1,4 +1,4 @@
-Inflector.inflections do |inflect|
+Inflecto.inflections do |inflect|
   inflect.plural(/\z/, 's')
   inflect.plural(/s\z/i, 's')
   inflect.plural(/(ax|test)is\z/i, '\1es')

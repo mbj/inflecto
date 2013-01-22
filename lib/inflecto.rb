@@ -1,4 +1,4 @@
-# The Inflector transforms words from singular to plural, class names to table names, modularized class names to ones without,
+# The Inflecto transforms words from singular to plural, class names to table names, modularized class names to ones without,
 # and class names to foreign keys. The default inflections for pluralization, singularization, and uncountable words are kept
 # in inflections.rb.
 #
@@ -6,7 +6,7 @@
 # in order to avoid breaking legacy applications which may be relying on errant inflections.
 # If you discover an incorrect inflection and require it for your application, you'll need
 # to correct it yourself (explained below).
-module Inflector
+module Inflecto
 
   # Convert input to UpperCamelCase
   #
@@ -15,8 +15,8 @@ module Inflector
   # @param [String] input
   #
   # @example
-  #   Inflector.camelize("data_mapper")        # => "DataMapper"
-  #   Inflector.camelize("data_mapper/errors") # => "DataMApper::Errors"
+  #   Inflecto.camelize("data_mapper")        # => "DataMapper"
+  #   Inflecto.camelize("data_mapper/errors") # => "DataMApper::Errors"
   #
   # @return [String]
   # 
@@ -33,8 +33,8 @@ module Inflector
   # @param [String] input
   #
   # @example
-  #   Inflector.underscore("DataMapper")         # => "data_mapper"
-  #   Inflector.underscore("DataMapper::Errors") # => "data_mapper/errors"
+  #   Inflecto.underscore("DataMapper")         # => "data_mapper"
+  #   Inflecto.underscore("DataMapper::Errors") # => "data_mapper/errors"
   #
   # @return [String]
   #
@@ -55,7 +55,7 @@ module Inflector
   # @param [String] input
   #
   # @example
-  #   Inflector.dasherize("foo_bar") # => "foo-bar"
+  #   Inflecto.dasherize("foo_bar") # => "foo-bar"
   #
   # @return [String]
   #
@@ -71,8 +71,8 @@ module Inflector
   #
   # @example
   #
-  #   Inflector.demodulize("DataMapper::Error") # => "Error"
-  #   Inflector.demodulize("DataMapper")        # => "DataMapper"
+  #   Inflecto.demodulize("DataMapper::Error") # => "Error"
+  #   Inflecto.demodulize("DataMapper")        # => "DataMapper"
   #
   # @return [String]
   #
@@ -88,7 +88,7 @@ module Inflector
   #
   # @example
   #
-  #   Inflector.foreign_key("Message) => "message_id"
+  #   Inflecto.foreign_key("Message) => "message_id"
   #
   # @return [String]
   #
@@ -106,8 +106,8 @@ module Inflector
   #
   # @example
   #
-  #   Inflector.constantize("Module")            # => Module
-  #   Inflector.constantize("DataMapper::Error") # => Test::Unit
+  #   Inflecto.constantize("Module")            # => Module
+  #   Inflecto.constantize("DataMapper::Error") # => Test::Unit
   #
   # @return [Class, Module]
   #
@@ -158,15 +158,15 @@ module Inflector
     end
   end
 
-  # Yields a singleton instance of Inflector::Inflections 
+  # Yields a singleton instance of Inflecto::Inflections 
   #
   # @example
   #
-  #   Inflector.inflections do |inflect|
+  #   Inflecto.inflections do |inflect|
   #     inflect.uncountable "rails"
   #   end
   #
-  # @return [Inflector::Inflections]
+  # @return [Inflecto::Inflections]
   #
   # @api public
   #
@@ -184,11 +184,11 @@ module Inflector
   #
   # @example
   #
-  #   Inflector.pluralize("post")         # => "posts"
-  #   Inflector.pluralize("octopus")      # => "octopi"
-  #   Inflector.pluralize("sheep")        # => "sheep"
-  #   Inflector.pluralize("words")        # => "words"
-  #   Inflector.pluralize("CamelOctopus") # => "CamelOctopi"
+  #   Inflecto.pluralize("post")         # => "posts"
+  #   Inflecto.pluralize("octopus")      # => "octopi"
+  #   Inflecto.pluralize("sheep")        # => "sheep"
+  #   Inflecto.pluralize("words")        # => "words"
+  #   Inflecto.pluralize("CamelOctopus") # => "CamelOctopi"
   #
   # @return [String]
   #
@@ -211,11 +211,11 @@ module Inflector
   #
   # @example
   #
-  #   Inflector.singularize("posts") # => "post"
-  #   Inflector.singularize("octopi") # => "octopus"
-  #   Inflector.singularize("sheep") # => "sheep"
-  #   Inflector.singularize("word") # => "word"
-  #   Inflector.singularize("CamelOctopi") # => "CamelOctopus"
+  #   Inflecto.singularize("posts") # => "post"
+  #   Inflecto.singularize("octopi") # => "octopus"
+  #   Inflecto.singularize("sheep") # => "sheep"
+  #   Inflecto.singularize("word") # => "word"
+  #   Inflecto.singularize("CamelOctopi") # => "CamelOctopus"
   #
   # @return [String]
   #
@@ -241,8 +241,8 @@ module Inflector
   #
   # @example
   #
-  #   Inflector.humanize("employee_salary") # => "Employee salary"
-  #   Inflector.humanize("author_id")       # => "Author"
+  #   Inflecto.humanize("employee_salary") # => "Employee salary"
+  #   Inflecto.humanize("author_id")       # => "Author"
   #
   # @return [String]
   #
@@ -265,9 +265,9 @@ module Inflector
   #
   # @example
   #
-  #   Inflector.tabelize("RawScaledScorer") # => "raw_scaled_scorers"
-  #   Inflector.tabelize("egg_and_ham")     # => "egg_and_hams"
-  #   Inflector.tabelize("fancyCategory")   # => "fancy_categories"
+  #   Inflecto.tabelize("RawScaledScorer") # => "raw_scaled_scorers"
+  #   Inflecto.tabelize("egg_and_ham")     # => "egg_and_hams"
+  #   Inflecto.tabelize("fancyCategory")   # => "fancy_categories"
   #
   # @return [String]
   #
@@ -286,11 +286,11 @@ module Inflector
   #
   # @examples:
   #
-  #   Inflector.classify("egg_and_hams") # => "EggAndHam"
-  #   Inflector.classify("posts")        # => "Post"
+  #   Inflecto.classify("egg_and_hams") # => "EggAndHam"
+  #   Inflecto.classify("posts")        # => "Post"
   #
   #   # Singular names are not handled correctly:
-  #   Inflector.classify("business")     # => "Busines"
+  #   Inflecto.classify("business")     # => "Busines"
   #
   # @return [String]
   #

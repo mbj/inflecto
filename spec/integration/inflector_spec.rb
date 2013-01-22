@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Inflector, 'underscore' do
+describe Inflecto, 'underscore' do
   specify 'allows to create snake_case from CamelCase' do
-    Inflector.underscore('CamelCase').should eql('camel_case')
+    Inflecto.underscore('CamelCase').should eql('camel_case')
   end
 end

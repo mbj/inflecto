@@ -1,8 +1,8 @@
-module Inflector
-  # A singleton instance of this class is yielded by Inflector.inflections, which can then be used to specify additional
+module Inflecto
+  # A singleton instance of this class is yielded by Inflecto.inflections, which can then be used to specify additional
   # inflection rules. Examples:
   #
-  #   Inflector.inflections do |inflect|
+  #   Inflecto.inflections do |inflect|
   #     inflect.plural /^(ox)$/i, '\1\2en'
   #     inflect.singular /^(ox)en/i, '\1'
   #
@@ -115,8 +115,8 @@ module Inflector
     #
     # @example
     #
-    #   Inflector.irregular('octopus', 'octopi')
-    #   Inflector.irregular('person', 'people')
+    #   Inflecto.irregular('octopus', 'octopi')
+    #   Inflecto.irregular('person', 'people')
     #
     # @param [String] singular
     # @param [String] plural
@@ -150,9 +150,9 @@ module Inflector
     #
     # @example
     #
-    #   Inflector.uncountable "money"
-    #   Inflector.uncountable "money", "information"
-    #   Inflector.uncountable %w( money information rice )
+    #   Inflecto.uncountable "money"
+    #   Inflecto.uncountable "money", "information"
+    #   Inflecto.uncountable %w( money information rice )
     #
     # @param [Enumerable<String>] words
     #
@@ -172,8 +172,8 @@ module Inflector
     # When a string is used, the human form should be specified as desired (example: 'The name', not 'the_name')
     #
     # @example
-    #   Inflector.human(/_cnt$/i, '\1_count')
-    #   Inflector.human("legacy_col_person_name", "Name")
+    #   Inflecto.human(/_cnt$/i, '\1_count')
+    #   Inflecto.human("legacy_col_person_name", "Name")
     #
     # @param [String, Regexp] rule
     # @param [String, Regexp] replacement
@@ -191,7 +191,7 @@ module Inflector
     #
     # @example
     #
-    #   Inflector.clear
+    #   Inflecto.clear
     #
     # @return [self]
     #
