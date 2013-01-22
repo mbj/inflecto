@@ -98,6 +98,8 @@ module Inflecto
     "#{underscore(demodulize(input))}_id"
   end
 
+  EXTRA_CONST_ARGS = (RUBY_VERSION < '1.9' ? [] : [ false ]).freeze 
+
   # Find a constant with the name specified in the argument string
   #
   # The name is assumed to be the one of a top-level constant, constant scope of caller is igored
@@ -115,19 +117,13 @@ module Inflecto
   #
   def self.constantize(input)
     names = input.split('::')
-    names.shift if names.empty? || names.first.empty?
+    names.shift if !names.empty? and names.first.empty?
 
-    constant = Object
-    names.each do |name|
-      # Ruby 1.9 introduces an inherit argument for Module#const_get and
-      # #const_defined? and changes their default behavior.
-      if Module.method(:const_get).arity == 1
-        constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
-      else
-        constant = constant.const_defined?(name, false) ? constant.const_get(name) : constant.const_missing(name)
+    names.inject(Object) do |constant, name|
+      if constant.const_defined?(name, *EXTRA_CONST_ARGS)
+        constant.const_get(name)
       end
     end
-    constant
   end
 
   # Convert a number into an ordinal string 
