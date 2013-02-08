@@ -3,7 +3,7 @@ inflecto
 
 [![Build Status](https://secure.travis-ci.org/mbj/inflecto.png)](http://travis-ci.org/mbj/inflecto)
 [![Dependency Status](https://gemnasium.com/mbj/inflecto.png)](https://gemnasium.com/mbj/inflecto)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mbj/inflecto)
+[![Code Climate](https://codeclimate.com/github/mbj/inclecto.png)](https://codeclimate.com/github/mbj/inflecto)
 
 This is a standalone inflecto ripped out from [dm-core](https://github.com/datamapper/dm-core)
 
