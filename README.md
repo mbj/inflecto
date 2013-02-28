@@ -5,11 +5,12 @@ inflecto
 [![Dependency Status](https://gemnasium.com/mbj/inflecto.png)](https://gemnasium.com/mbj/inflecto)
 [![Code Climate](https://codeclimate.com/github/mbj/inclecto.png)](https://codeclimate.com/github/mbj/inflecto)
 
-This is a standalone inflecto ripped out from [dm-core](https://github.com/datamapper/dm-core)
-
-The dm-core inflecto originated from [extlib](https://github.com/datamapper/extlib)
-
+This is a standalone inflector ripped out from [dm-core](https://github.com/datamapper/dm-core)
+The dm-core inflector originated from [extlib](https://github.com/datamapper/extlib)
 The extlib inflecto originated from [active_support](https://github.com/rails/rails)
+
+So this code is NOT my work. And it does not meet current dm2 quality standards.
+We'll have to improve it before a release of dm2.
 
 Installation
 ------------
