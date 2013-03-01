@@ -83,8 +83,7 @@ module Inflecto
     # @api private
     #
     def plural(rule, replacement)
-      @uncountables.delete(rule) if rule.is_a?(String)
-      @uncountables.delete(replacement)
+      rule(rule, replacement, @plurals)
       @plurals.insert(0, [rule, replacement])
       self
     end
@@ -102,11 +101,26 @@ module Inflecto
     # @api private
     #
     def singular(rule, replacement)
-      @uncountables.delete(rule) if rule.is_a?(String)
-      @uncountables.delete(replacement)
-      @singulars.insert(0, [rule, replacement])
+      rule(rule, replacement, @singulars)
       self
     end
+
+    # Add a new rule
+    #
+    # @param [String, Regexp] rule
+    # @param [String, Regexp] replacement
+    # @param [Array] target
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def rule(rule, replacement, target)
+      @uncountables.delete(rule) if rule.is_a?(String)
+      @uncountables.delete(replacement)
+      target.insert(0, [rule, replacement])
+    end
+    private :rule
 
     # Add a new irregular pluralization
     #
@@ -132,6 +146,7 @@ module Inflecto
       singular(Regexp.new("(#{plural[0,1]})#{plural[1..-1]}$", "i"), '\1' + singular[1..-1])
       self
     end
+
 
     # Add uncountable words 
     #
