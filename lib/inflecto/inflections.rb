@@ -142,10 +142,24 @@ module Inflecto
     def irregular(singular, plural)
       @uncountables.delete(singular)
       @uncountables.delete(plural)
-      plural(Regexp.new("(#{singular[0,1]})#{singular[1..-1]}$", "i"), '\1' + plural[1..-1])
-      singular(Regexp.new("(#{plural[0,1]})#{plural[1..-1]}$", "i"), '\1' + singular[1..-1])
+      add_irregular(singular, plural, @plurals)
+      add_irregular(plural, singular, @singulars)
       self
     end
+
+    # Add irregular inflection
+    #
+    # @param [String] rule
+    # @param [String] replacement
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def add_irregular(rule, replacement, target)
+      rule(Regexp.new("(#{rule[0,1]})#{rule[1..-1]}$", "i"), '\1' + replacement[1..-1], target)
+    end
+    private :add_irregular
 
 
     # Add uncountable words 
