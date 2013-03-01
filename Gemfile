@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://github.com'
 
 gemspec
 
