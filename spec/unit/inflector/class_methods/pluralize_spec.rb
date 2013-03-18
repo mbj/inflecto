@@ -156,7 +156,7 @@ describe Inflecto, '.pluralize' do
     'shoe'         => 'shoes',
     'horse'        => 'horses',
     'edge'         => 'edges',
-                  
+
   }
 
   # Missing rule or exception?

@@ -26,7 +26,7 @@ LongParameterList:
   enabled: true
   overrides: {}
 FeatureEnvy:
-  exclude: 
+  exclude:
   - Inflecto::Inflections#irregular
   enabled: true
 ClassVariable:
@@ -52,12 +52,12 @@ NestedIterators:
   max_allowed_nesting: 2
 LongMethod:
   max_statements: 8
-  exclude: 
+  exclude:
   - Inflecto::Inflections#irregular
   enabled: true
 Duplication:
   allow_calls: []
-  exclude: 
+  exclude:
   - Inflecto::Inflections#irregular
   enabled: true
   max_calls: 2
@@ -81,7 +81,7 @@ SimulatedPolymorphism:
   enabled: true
   max_ifs: 2
 DataClump:
-  exclude: 
+  exclude:
   - [replacement, rule]
   enabled: true
   max_copies: 2

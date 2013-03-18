@@ -19,14 +19,14 @@ module Inflecto
   #   Inflecto.camelize("data_mapper/errors") # => "DataMApper::Errors"
   #
   # @return [String]
-  # 
+  #
   # @api public
   #
   def self.camelize(input)
     input.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
   end
 
-  # Convert input to underscored, lowercase string 
+  # Convert input to underscored, lowercase string
   #
   # Changes '::' to '/' to convert namespaces to paths.
   #
@@ -50,7 +50,7 @@ module Inflecto
     word
   end
 
-  # Convert input underscores to dashes 
+  # Convert input underscores to dashes
   #
   # @param [String] input
   #
@@ -82,7 +82,7 @@ module Inflecto
     input.to_s.gsub(/^.*::/, '')
   end
 
-  # Creates a foreign key name 
+  # Creates a foreign key name
   #
   # @param [String] input
   #
@@ -98,7 +98,7 @@ module Inflecto
     "#{underscore(demodulize(input))}_id"
   end
 
-  EXTRA_CONST_ARGS = (RUBY_VERSION < '1.9' ? [] : [ false ]).freeze 
+  EXTRA_CONST_ARGS = (RUBY_VERSION < '1.9' ? [] : [ false ]).freeze
 
   # Find a constant with the name specified in the argument string
   #
@@ -128,7 +128,7 @@ module Inflecto
     end
   end
 
-  # Convert a number into an ordinal string 
+  # Convert a number into an ordinal string
   #
   # @param [Fixnum] number
   #
@@ -156,7 +156,7 @@ module Inflecto
     end
   end
 
-  # Yields a singleton instance of Inflecto::Inflections 
+  # Yields a singleton instance of Inflecto::Inflections
   #
   # @example
   #
@@ -176,7 +176,7 @@ module Inflecto
     end
   end
 
-  # Convert input word string to plural 
+  # Convert input word string to plural
   #
   # @param [String] word
   #
@@ -234,7 +234,7 @@ module Inflecto
   #
   # @param [String] input
   #
-  # capitalizes the first word and turns underscores into spaces and strips a # trailing "_id", if any. 
+  # capitalizes the first word and turns underscores into spaces and strips a # trailing "_id", if any.
   # Like +titleize+, this is meant for creating pretty output.
   #
   # @example
@@ -254,11 +254,11 @@ module Inflecto
   end
 
 
-  # Tabelize input string 
+  # Tabelize input string
   #
   # @param [String] input
   #
-  # Create the name of a table like Rails does for models to table names. 
+  # Create the name of a table like Rails does for models to table names.
   # This method # uses the +pluralize+ method on the last word in the string.
   #
   # @example
@@ -275,10 +275,10 @@ module Inflecto
     pluralize(underscore(input).gsub('/','_'))
   end
 
-  # Classify input 
+  # Classify input
   #
   # Create a class name from a plural table name like Rails does for table names to models.
-  # Note that this returns a string and not a Class. 
+  # Note that this returns a string and not a Class.
   #
   # To convert to an actual class # follow +classify+ with +constantize+.
   #

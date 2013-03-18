@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.email       = ['mbj@seonic.net']
   gem.description = 'Inflector for strings'
   gem.summary     = gem.description
-  gem.homepage    = 'https://github.com/mbj/inflecto' 
+  gem.homepage    = 'https://github.com/mbj/inflecto'
 
   gem.require_paths    = %w[lib]
   gem.files            = `git ls-files`.split($/)

@@ -11,4 +11,3 @@ describe Inflecto do
     end
   end
 end
-

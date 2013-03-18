@@ -138,7 +138,7 @@ describe Inflecto, '#singular' do
     'pluses'    => 'plus',
     'thieves'   => 'thief',
     'criteria'  => 'criterion',
-    'postgres'  => 'postgres' 
+    'postgres'  => 'postgres'
   }
 
   PENDING.each do |plural, singular|

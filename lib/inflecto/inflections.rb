@@ -34,7 +34,7 @@ module Inflecto
     # @api private
     #
     attr_reader :plurals
-    
+
     # Return singulars
     #
     # @return [Array]
@@ -42,7 +42,7 @@ module Inflecto
     # @api private
     #
     attr_reader :singulars
-    
+
     # Return uncountables
     #
     # @return [Array]
@@ -50,7 +50,7 @@ module Inflecto
     # @api private
     #
     attr_reader :uncountables
-    
+
     # Return humans
     #
     # @return [Array]
@@ -162,7 +162,7 @@ module Inflecto
     private :add_irregular
 
 
-    # Add uncountable words 
+    # Add uncountable words
     #
     # Uncountable will not be inflected
     #
