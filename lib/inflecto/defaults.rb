@@ -52,7 +52,7 @@ Inflecto.inflections do |inflect|
   inflect.irregular('child', 'children')
   inflect.irregular('sex', 'sexes')
   inflect.irregular('move', 'moves')
-  inflect.irregular('cow', 'kine')
+  inflect.irregular('cow', 'cows')
 
   inflect.uncountable(%w(hovercraft moose milk rain Swiss grass equipment information rice money species series fish sheep jeans))
 end

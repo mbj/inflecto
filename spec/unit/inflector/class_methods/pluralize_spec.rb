@@ -156,12 +156,11 @@ describe Inflecto, '.pluralize' do
     'shoe'         => 'shoes',
     'horse'        => 'horses',
     'edge'         => 'edges',
-
+    'cow'          => 'cows',
   }
 
   # Missing rule or exception?
   PENDING = {
-    'cow'          => 'cows', # 'kine' is archaic and nobody uses it
     'virus'        => 'viruses',
     'torpedo'      => 'torpedoes',
     'Swiss'        => 'Swiss',
