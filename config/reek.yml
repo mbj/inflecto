@@ -82,7 +82,7 @@ SimulatedPolymorphism:
   max_ifs: 2
 DataClump:
   exclude:
-  - [replacement, rule]
+  - Inflecto::Inflections
   enabled: true
   max_copies: 2
   min_clump_size: 2
