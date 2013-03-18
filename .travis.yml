@@ -30,9 +30,6 @@ matrix:
     - rvm: jruby-head
       env: JRUBY_OPTS="$JRUBY_OPTS --debug"
   allow_failures:
-    # yard parser fails
-    - rvm: jruby-head
-      env: JRUBY_OPTS="$JRUBY_OPTS --debug"
     # mutant fails
     - rvm: 1.9.3
     - rvm: rbx-19mode
