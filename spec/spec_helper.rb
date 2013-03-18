@@ -1,10 +1,26 @@
 # encoding: utf-8
 
-require 'rspec'
+require 'devtools'
+
+Devtools.init_spec_helper
+
+if ENV['COVERAGE'] == 'true'
+  require 'simplecov'
+
+  SimpleCov.start do
+    command_name     'spec:unit'
+    add_filter       'config'
+    add_filter       'spec'
+    minimum_coverage 88.24
+  end
+end
+
 require 'inflecto'
 
 # require spec support files and shared behavior
-Dir[File.expand_path('../{support,shared}/**/*.rb', __FILE__)].each { |f| require(f) }
+Dir[File.expand_path('../{support,shared}/**/*.rb', __FILE__)].each do |file|
+  require file
+end
 
 RSpec.configure do |config|
 end
