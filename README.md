@@ -1,9 +1,17 @@
 inflecto
 ========
 
-[![Build Status](https://secure.travis-ci.org/mbj/inflecto.png)](http://travis-ci.org/mbj/inflecto)
-[![Dependency Status](https://gemnasium.com/mbj/inflecto.png)](https://gemnasium.com/mbj/inflecto)
-[![Code Climate](https://codeclimate.com/github/mbj/inclecto.png)](https://codeclimate.com/github/mbj/inflecto)
+[![Gem Version](https://badge.fury.io/rb/inflecto.png)][gem]
+[![Build Status](https://secure.travis-ci.org/mbj/inflecto.png?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/mbj/inflecto.png)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/mbj/inflecto.png)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/mbj/inflecto/badge.png?branch=master)][coveralls]
+
+[gem]: https://rubygems.org/gems/inflecto
+[travis]: https://travis-ci.org/mbj/inflecto
+[gemnasium]: https://gemnasium.com/mbj/inflecto
+[codeclimate]: https://codeclimate.com/github/mbj/inflecto
+[coveralls]: https://coveralls.io/r/mbj/inflecto
 
 This is a standalone inflector ripped out from [dm-core](https://github.com/datamapper/dm-core)
 The dm-core inflector originated from [extlib](https://github.com/datamapper/extlib)
