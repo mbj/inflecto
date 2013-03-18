@@ -157,10 +157,10 @@ module Inflecto
     # @api private
     #
     def add_irregular(rule, replacement, target)
-      rule(Regexp.new("(#{rule[0,1]})#{rule[1..-1]}$", "i"), '\1' + replacement[1..-1], target)
+      head, *tail = rule.chars.to_a
+      rule(Regexp.new("(#{head})#{tail.join}$", 'i'), '\1' + replacement[1..-1], target)
     end
     private :add_irregular
-
 
     # Add uncountable words
     #
