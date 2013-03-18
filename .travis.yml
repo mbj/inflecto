@@ -1,17 +1,38 @@
 language: ruby
-bundler_args: --without guard metrics
-script: "bundle exec rake spec"
+before_install: gem install bundler
+bundler_args: --without yard guard benchmarks
+script: "bundle exec rake ci"
 rvm:
-  - 1.8.7
   - ree
+  - 1.8.7
   - 1.9.2
   - 1.9.3
   - 2.0.0
-  - jruby-18mode
-  - jruby-19mode
+  - ruby-head
   - rbx-18mode
   - rbx-19mode
-  - ruby-head
 notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#datamapper"
+    on_success: never
+    on_failure: change
   email:
-    - mbj@seonic.net
+    recipients:
+      - mbj@seonic.net
+    on_success: never
+    on_failure: change
+matrix:
+  include:
+    - rvm: jruby-18mode
+    - rvm: jruby-19mode
+      env: JRUBY_OPTS="$JRUBY_OPTS --debug"
+    - rvm: jruby-head
+      env: JRUBY_OPTS="$JRUBY_OPTS --debug"
+  allow_failures:
+    # yard parser fails
+    - rvm: jruby-head
+      env: JRUBY_OPTS="$JRUBY_OPTS --debug"
+    # mutant fails
+    - rvm: 1.9.3
+    - rvm: rbx-19mode
