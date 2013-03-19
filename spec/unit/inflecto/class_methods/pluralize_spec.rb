@@ -190,4 +190,8 @@ describe Inflecto, '.pluralize' do
     end
   end
 
+  it 'coerces its input to a string' do
+    Inflecto.pluralize(:person).should == 'people'
+  end
+
 end
