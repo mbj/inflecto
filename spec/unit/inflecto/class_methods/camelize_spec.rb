@@ -17,5 +17,9 @@ describe Inflecto do
     it 'camelizes data_mapper/associations/one_to_many as DataMapper::Associations::OneToMany' do
       Inflecto.camelize('data_mapper/associations/one_to_many').should == 'DataMapper::Associations::OneToMany'
     end
+
+    it 'coerces its input to a string' do
+      Inflecto.camelize(456).should == '456'
+    end
   end
 end
