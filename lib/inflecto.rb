@@ -198,7 +198,7 @@ module Inflecto
     if result.empty? || inflections.uncountables.include?(result.downcase)
       result
     else
-      inflections.plurals.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
+      inflections.plurals.each { |rule, replacement| break if result.gsub!(rule, replacement) }
       result
     end
   end
@@ -225,7 +225,7 @@ module Inflecto
     if inflections.uncountables.any? { |inflection| result =~ /\b(#{inflection})\Z/i }
       result
     else
-      inflections.singulars.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
+      inflections.singulars.each { |rule, replacement| break if result.gsub!(rule, replacement) }
       result
     end
   end
@@ -249,7 +249,7 @@ module Inflecto
   def self.humanize(input)
     result = input.to_s.dup
 
-    inflections.humans.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
+    inflections.humans.each { |rule, replacement| break if result.gsub!(rule, replacement) }
     result.gsub(/_id$/, "").gsub(/_/, " ").capitalize
   end
 

@@ -150,4 +150,8 @@ describe Inflecto, '#singular' do
       Inflecto.singularize(plural).should eql(singular)
     end
   end
+
+  it 'coerces its input to a string' do
+    Inflecto.singularize(:people).should == 'person'
+  end
 end
