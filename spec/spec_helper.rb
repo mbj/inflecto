@@ -33,8 +33,10 @@ end
 # inflecto.
 module Mutant
   module Inflecto
-    ::Inflecto.singleton_methods.each do |name|
-      define_singleton_method name, ::Inflecto.method(name).to_proc
+    if RUBY_VERSION >= '1.9'
+      ::Inflecto.singleton_methods.each do |name|
+        define_singleton_method name, ::Inflecto.method(name).to_proc
+      end
     end
   end
 end
