@@ -45,7 +45,7 @@ module Inflecto
     word.gsub!(/::/, '/')
     word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
     word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-    word.tr!("-", "_")
+    word.tr!('-', '_')
     word.downcase!
     word
   end
@@ -144,10 +144,12 @@ module Inflecto
   # @api private
   #
   def self.ordinalize(number)
-    if (11..13).include?(number.abs % 100)
+    abs_value = number.abs
+
+    if (11..13).include?(abs_value % 100)
       "#{number}th"
     else
-      case number.abs % 10
+      case abs_value % 10
         when 1; "#{number}st"
         when 2; "#{number}nd"
         when 3; "#{number}rd"
@@ -169,11 +171,8 @@ module Inflecto
   # @api public
   #
   def self.inflections
-    if block_given?
-      yield Inflections.instance
-    else
-      Inflections.instance
-    end
+    instance = Inflections.instance
+    block_given? ? yield(instance) : instance
   end
 
   # Convert input word string to plural
@@ -193,14 +192,11 @@ module Inflecto
   # @api public
   #
   def self.pluralize(word)
-    result = word.dup
+    return word if uncountable?(word)
 
-    if result.empty? || inflections.uncountables.include?(result.downcase)
-      result
-    else
-      inflections.plurals.each { |rule, replacement| break if result.gsub!(rule, replacement) }
-      result
-    end
+    result = word.dup
+    inflections.plurals.each { |rule, replacement| break if result.gsub!(rule, replacement) }
+    result
   end
 
   # Convert word to singular
@@ -220,14 +216,11 @@ module Inflecto
   # @api public
   #
   def self.singularize(word)
-    result = word.dup
+    return word if uncountable?(word)
 
-    if inflections.uncountables.any? { |inflection| result =~ /\b(#{inflection})\Z/i }
-      result
-    else
-      inflections.singulars.each { |rule, replacement| break if result.gsub!(rule, replacement) }
-      result
-    end
+    result = word.dup
+    inflections.singulars.each { |rule, replacement| break if result.gsub!(rule, replacement) }
+    result
   end
 
   # Humanize string
@@ -301,6 +294,24 @@ module Inflecto
     camelize(singularize(table_name.sub(/.*\./, '')))
   end
 
+  # Detects uncountable words
+  #
+  # @example
+  #
+  #   Inflecto.uncountable?('rice') #=> true
+  #   Inflecto.uncountable?('apple') #=> false
+  #
+  # @param [String] word
+  #
+  # @return [Boolean]
+  #   true, if word is uncountable
+  #
+  # @api private
+  #
+  def self.uncountable?(word)
+    word.empty? || inflections.uncountables.include?(word.downcase)
+  end
+  private_class_method :uncountable?
 end
 
 require 'inflecto/inflections'
