@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Inflecto, '#singular' do
+describe Inflecto, '.singularize' do
   # ==== exceptional cases
 
   PLURAL_TO_SINGULAR = {
@@ -147,7 +147,7 @@ describe Inflecto, '#singular' do
 
   PLURAL_TO_SINGULAR.each do |plural, singular|
     it "should signularize #{plural} => #{singular}" do
-      Inflecto.singularize(plural).should eql(singular)
+      Inflecto.singularize(i(plural)).should eql(singular)
     end
   end
 end

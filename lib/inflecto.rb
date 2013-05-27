@@ -23,7 +23,7 @@ module Inflecto
   # @api public
   #
   def self.camelize(input)
-    input.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
+    input.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
   end
 
   # Convert input to underscored, lowercase string
@@ -41,7 +41,7 @@ module Inflecto
   # @api public
   #
   def self.underscore(input)
-    word = input.to_s.dup
+    word = input.dup
     word.gsub!(/::/, '/')
     word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
     word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
@@ -79,7 +79,7 @@ module Inflecto
   # @api public
   #
   def self.demodulize(input)
-    input.to_s.gsub(/^.*::/, '')
+    input.gsub(/^.*::/, '')
   end
 
   # Creates a foreign key name
@@ -144,10 +144,10 @@ module Inflecto
   # @api private
   #
   def self.ordinalize(number)
-    if (11..13).include?(number.to_i % 100)
+    if (11..13).include?(number.abs % 100)
       "#{number}th"
     else
-      case number.to_i % 10
+      case number.abs % 10
         when 1; "#{number}st"
         when 2; "#{number}nd"
         when 3; "#{number}rd"
@@ -193,12 +193,12 @@ module Inflecto
   # @api public
   #
   def self.pluralize(word)
-    result = word.to_s.dup
+    result = word.dup
 
     if result.empty? || inflections.uncountables.include?(result.downcase)
       result
     else
-      inflections.plurals.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
+      inflections.plurals.each { |rule, replacement| break if result.gsub!(rule, replacement) }
       result
     end
   end
@@ -220,12 +220,12 @@ module Inflecto
   # @api public
   #
   def self.singularize(word)
-    result = word.to_s.dup
+    result = word.dup
 
     if inflections.uncountables.any? { |inflection| result =~ /\b(#{inflection})\Z/i }
       result
     else
-      inflections.singulars.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
+      inflections.singulars.each { |rule, replacement| break if result.gsub!(rule, replacement) }
       result
     end
   end
@@ -247,12 +247,14 @@ module Inflecto
   # @api private
   #
   def self.humanize(input)
-    result = input.to_s.dup
+    result = input.dup
 
-    inflections.humans.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
-    result.gsub(/_id$/, "").gsub(/_/, " ").capitalize
+    inflections.humans.each { |rule, replacement| break if result.gsub!(rule, replacement) }
+    result.gsub!(/_id$/, "")
+    result.gsub!(/_/, " ")
+    result.capitalize!
+    result
   end
-
 
   # Tabelize input string
   #
@@ -296,7 +298,7 @@ module Inflecto
   #
   def self.classify(table_name)
     # strip out any leading schema name
-    camelize(singularize(table_name.to_s.sub(/.*\./, '')))
+    camelize(singularize(table_name.sub(/.*\./, '')))
   end
 
 end
