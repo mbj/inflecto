@@ -67,7 +67,10 @@ module Inflecto
     # @api private
     #
     def initialize
-      @plurals, @singulars, @uncountables, @humans = [], [], [], []
+      @plurals      = RulesCollection.new
+      @singulars    = RulesCollection.new
+      @humans       = RulesCollection.new
+      @uncountables = []
     end
 
     # Add a new plural role

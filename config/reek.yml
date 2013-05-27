@@ -1,7 +1,8 @@
 ---
 Attribute:
   enabled: true
-  exclude: []
+  exclude:
+  - Inflecto::Inflections
 BooleanParameter:
   enabled: true
   exclude: []
@@ -13,7 +14,8 @@ ControlParameter:
   exclude: []
 DataClump:
   enabled: true
-  exclude: []
+  exclude:
+  - Inflecto::Inflections
   max_copies: 2
   min_clump_size: 2
 DuplicateMethodCall:
@@ -30,7 +32,9 @@ IrresponsibleModule:
   exclude: []
 LongParameterList:
   enabled: true
-  exclude: []
+  exclude:
+  - Inflecto::Inflections#add_irregular
+  - Inflecto::Inflections#rule
   max_params: 2
   overrides:
     initialize:
@@ -53,7 +57,8 @@ RepeatedConditional:
   max_ifs: 1
 TooManyInstanceVariables:
   enabled: true
-  exclude: []
+  exclude:
+  - Inflecto::Inflections
   max_instance_variables: 3
 TooManyMethods:
   enabled: true
@@ -64,7 +69,7 @@ TooManyStatements:
   exclude:
   - each
   - Inflecto#self.underscore
-  max_statements: 6
+  max_statements: 5
 UncommunicativeMethodName:
   enabled: true
   exclude: []

@@ -193,10 +193,7 @@ module Inflecto
   #
   def self.pluralize(word)
     return word if uncountable?(word)
-
-    result = word.dup
-    inflections.plurals.each { |rule, replacement| break if result.gsub!(rule, replacement) }
-    result
+    inflections.plurals.apply_to(word)
   end
 
   # Convert word to singular
@@ -217,10 +214,7 @@ module Inflecto
   #
   def self.singularize(word)
     return word if uncountable?(word)
-
-    result = word.dup
-    inflections.singulars.each { |rule, replacement| break if result.gsub!(rule, replacement) }
-    result
+    inflections.singulars.apply_to(word)
   end
 
   # Humanize string
@@ -240,9 +234,7 @@ module Inflecto
   # @api private
   #
   def self.humanize(input)
-    result = input.dup
-
-    inflections.humans.each { |rule, replacement| break if result.gsub!(rule, replacement) }
+    result = inflections.humans.apply_to(input)
     result.gsub!(/_id$/, "")
     result.gsub!(/_/, " ")
     result.capitalize!
@@ -314,5 +306,6 @@ module Inflecto
   private_class_method :uncountable?
 end
 
+require 'inflecto/rules_collection'
 require 'inflecto/inflections'
 require 'inflecto/defaults'
