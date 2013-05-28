@@ -9,8 +9,8 @@ describe Inflecto::Inflections, '#irregular' do
 
   it { should be(object) }
 
-  its(:plurals)   { should include([/(p)erson$/i, "\\1eople"]) }
-  its(:singulars) { should include([/(p)eople$/i, "\\1erson"]) }
+  its(:plurals)   { should include([/(p)erson\z/i, "\\1eople"]) }
+  its(:singulars) { should include([/(p)eople\z/i, "\\1erson"]) }
 
   context 'when singular form is in uncountables' do
     before { object.uncountable('person') }

@@ -203,7 +203,7 @@ module Inflecto
     #
     def add_irregular(rule, replacement, target)
       head, *tail = rule.chars.to_a
-      rule(/(#{head})#{tail.join}$/i, '\1' + replacement[1..-1], target)
+      rule(/(#{head})#{tail.join}\z/i, '\1' + replacement[1..-1], target)
     end
 
     # Add a new rule

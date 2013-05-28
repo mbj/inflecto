@@ -23,7 +23,7 @@ module Inflecto
   # @api public
   #
   def self.camelize(input)
-    input.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
+    input.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:\A|_)(.)/) { $1.upcase }
   end
 
   # Convert input to underscored, lowercase string
@@ -79,7 +79,7 @@ module Inflecto
   # @api public
   #
   def self.demodulize(input)
-    input.gsub(/^.*::/, '')
+    input.gsub(/\A.*::/, '')
   end
 
   # Creates a foreign key name
@@ -235,7 +235,7 @@ module Inflecto
   #
   def self.humanize(input)
     result = inflections.humans.apply_to(input)
-    result.gsub!(/_id$/, "")
+    result.gsub!(/_id\z/, "")
     result.gsub!(/_/, " ")
     result.capitalize!
     result
@@ -259,7 +259,7 @@ module Inflecto
   # @api private
   #
   def self.tableize(input)
-    pluralize(underscore(input).gsub('/','_'))
+    pluralize(underscore(input).gsub('/', '_'))
   end
 
   # Classify input
