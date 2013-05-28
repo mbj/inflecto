@@ -186,7 +186,7 @@ describe Inflecto, '.pluralize' do
 
   SINGULAR_TO_PLURAL.each do |singular, plural|
     it "pluralizes #{singular} => #{plural}" do
-      Inflecto.pluralize(singular).should eql(plural)
+      Inflecto.pluralize(i(singular)).should eql(plural)
     end
   end
 

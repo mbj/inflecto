@@ -67,7 +67,10 @@ module Inflecto
     # @api private
     #
     def initialize
-      @plurals, @singulars, @uncountables, @humans = [], [], [], []
+      @plurals      = RulesCollection.new
+      @singulars    = RulesCollection.new
+      @humans       = RulesCollection.new
+      @uncountables = []
     end
 
     # Add a new plural role
@@ -84,7 +87,6 @@ module Inflecto
     #
     def plural(rule, replacement)
       rule(rule, replacement, @plurals)
-      @plurals.insert(0, [rule, replacement])
       self
     end
 
@@ -104,23 +106,6 @@ module Inflecto
       rule(rule, replacement, @singulars)
       self
     end
-
-    # Add a new rule
-    #
-    # @param [String, Regexp] rule
-    # @param [String, Regexp] replacement
-    # @param [Array] target
-    #
-    # @return [undefined]
-    #
-    # @api private
-    #
-    def rule(rule, replacement, target)
-      @uncountables.delete(rule) if rule.is_a?(String)
-      @uncountables.delete(replacement)
-      target.insert(0, [rule, replacement])
-    end
-    private :rule
 
     # Add a new irregular pluralization
     #
@@ -147,21 +132,6 @@ module Inflecto
       self
     end
 
-    # Add irregular inflection
-    #
-    # @param [String] rule
-    # @param [String] replacement
-    #
-    # @return [undefined]
-    #
-    # @api private
-    #
-    def add_irregular(rule, replacement, target)
-      head, *tail = rule.chars.to_a
-      rule(Regexp.new("(#{head})#{tail.join}$", 'i'), '\1' + replacement[1..-1], target)
-    end
-    private :add_irregular
-
     # Add uncountable words
     #
     # Uncountable will not be inflected
@@ -178,8 +148,8 @@ module Inflecto
     #
     # @api private
     #
-    def uncountable(words)
-      @uncountables.concat(words)
+    def uncountable(*words)
+      @uncountables.concat(words.flatten)
       self
     end
 
@@ -218,6 +188,38 @@ module Inflecto
     def clear
       initialize
       self
+    end
+
+    private
+
+    # Add irregular inflection
+    #
+    # @param [String] rule
+    # @param [String] replacement
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def add_irregular(rule, replacement, target)
+      head, *tail = rule.chars.to_a
+      rule(/(#{head})#{tail.join}\z/i, '\1' + replacement[1..-1], target)
+    end
+
+    # Add a new rule
+    #
+    # @param [String, Regexp] rule
+    # @param [String, Regexp] replacement
+    # @param [Array] target
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def rule(rule, replacement, target)
+      @uncountables.delete(rule)
+      @uncountables.delete(replacement)
+      target.insert(0, [rule, replacement])
     end
 
   end
