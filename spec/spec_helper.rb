@@ -17,7 +17,7 @@ if ENV['COVERAGE'] == 'true'
     command_name     'spec:unit'
     add_filter       'config'
     add_filter       'spec'
-    minimum_coverage 88.31
+    minimum_coverage 100
   end
 end
 
@@ -28,5 +28,22 @@ Dir[File.expand_path('../{support,shared}/**/*.rb', __FILE__)].each do |file|
   require file
 end
 
+# Mutant is already using inflecto. If it mutates inflecto methods then our
+# tests start to fail. Instead, we force mutant to use unmutated version of
+# inflecto.
+if defined?(Mutant)
+  module Mutant
+    module Inflecto
+      ::Inflecto.singleton_methods.each do |name|
+        define_singleton_method name, ::Inflecto.method(name).to_proc
+      end
+    end
+  end
+end
+
 RSpec.configure do |config|
+  # Helps to ensure that inflecto does not modify original input
+  def i(object)
+    object.freeze
+  end
 end

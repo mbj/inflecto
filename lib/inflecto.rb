@@ -23,7 +23,7 @@ module Inflecto
   # @api public
   #
   def self.camelize(input)
-    input.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
+    input.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:\A|_)(.)/) { $1.upcase }
   end
 
   # Convert input to underscored, lowercase string
@@ -41,11 +41,11 @@ module Inflecto
   # @api public
   #
   def self.underscore(input)
-    word = input.to_s.dup
+    word = input.dup
     word.gsub!(/::/, '/')
     word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
     word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-    word.tr!("-", "_")
+    word.tr!('-', '_')
     word.downcase!
     word
   end
@@ -79,7 +79,7 @@ module Inflecto
   # @api public
   #
   def self.demodulize(input)
-    input.to_s.gsub(/^.*::/, '')
+    input.gsub(/\A.*::/, '')
   end
 
   # Creates a foreign key name
@@ -144,10 +144,12 @@ module Inflecto
   # @api private
   #
   def self.ordinalize(number)
-    if (11..13).include?(number.to_i % 100)
+    abs_value = number.abs
+
+    if (11..13).include?(abs_value % 100)
       "#{number}th"
     else
-      case number.to_i % 10
+      case abs_value % 10
         when 1; "#{number}st"
         when 2; "#{number}nd"
         when 3; "#{number}rd"
@@ -169,11 +171,8 @@ module Inflecto
   # @api public
   #
   def self.inflections
-    if block_given?
-      yield Inflections.instance
-    else
-      Inflections.instance
-    end
+    instance = Inflections.instance
+    block_given? ? yield(instance) : instance
   end
 
   # Convert input word string to plural
@@ -193,14 +192,8 @@ module Inflecto
   # @api public
   #
   def self.pluralize(word)
-    result = word.to_s.dup
-
-    if result.empty? || inflections.uncountables.include?(result.downcase)
-      result
-    else
-      inflections.plurals.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
-      result
-    end
+    return word if uncountable?(word)
+    inflections.plurals.apply_to(word)
   end
 
   # Convert word to singular
@@ -220,14 +213,8 @@ module Inflecto
   # @api public
   #
   def self.singularize(word)
-    result = word.to_s.dup
-
-    if inflections.uncountables.any? { |inflection| result =~ /\b(#{inflection})\Z/i }
-      result
-    else
-      inflections.singulars.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
-      result
-    end
+    return word if uncountable?(word)
+    inflections.singulars.apply_to(word)
   end
 
   # Humanize string
@@ -247,12 +234,12 @@ module Inflecto
   # @api private
   #
   def self.humanize(input)
-    result = input.to_s.dup
-
-    inflections.humans.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
-    result.gsub(/_id$/, "").gsub(/_/, " ").capitalize
+    result = inflections.humans.apply_to(input)
+    result.gsub!(/_id\z/, "")
+    result.gsub!(/_/, " ")
+    result.capitalize!
+    result
   end
-
 
   # Tabelize input string
   #
@@ -272,7 +259,7 @@ module Inflecto
   # @api private
   #
   def self.tableize(input)
-    pluralize(underscore(input).gsub('/','_'))
+    pluralize(underscore(input).gsub('/', '_'))
   end
 
   # Classify input
@@ -296,10 +283,29 @@ module Inflecto
   #
   def self.classify(table_name)
     # strip out any leading schema name
-    camelize(singularize(table_name.to_s.sub(/.*\./, '')))
+    camelize(singularize(table_name.sub(/.*\./, '')))
   end
 
+  # Test if word is uncountable
+  #
+  # @example
+  #
+  #   Inflecto.uncountable?('rice') #=> true
+  #   Inflecto.uncountable?('apple') #=> false
+  #
+  # @param [String] word
+  #
+  # @return [Boolean]
+  #   true, if word is uncountable
+  #
+  # @api private
+  #
+  def self.uncountable?(word)
+    word.empty? || inflections.uncountables.include?(word.downcase)
+  end
+  private_class_method :uncountable?
 end
 
+require 'inflecto/rules_collection'
 require 'inflecto/inflections'
 require 'inflecto/defaults'
