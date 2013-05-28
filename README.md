@@ -17,9 +17,6 @@ This is a standalone inflector ripped out from [dm-core](https://github.com/data
 The dm-core inflector originated from [extlib](https://github.com/datamapper/extlib)
 The extlib inflecto originated from [active_support](https://github.com/rails/rails)
 
-So this code is NOT my work. And it does not meet current dm2 quality standards.
-We'll have to improve it before a release of dm2.
-
 Installation
 ------------
 
@@ -35,7 +32,7 @@ Credits
 
 The rails, merb & datamapper team
 
-The current maintainer is Markus Schirp ([mbj](https://github.com/mbj))
+The current maintainer is Markus Schirp ([mbj](https://github.com/mbj)) with help from [indirekj](https://github.com/indirekj).
 
 Contributing
 -------------
