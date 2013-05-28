@@ -31,9 +31,9 @@ end
 # Mutant is already using inflecto. If it mutates inflecto methods then our
 # tests start to fail. Instead, we force mutant to use unmutated version of
 # inflecto.
-module Mutant
-  module Inflecto
-    if RUBY_VERSION >= '1.9'
+if defined?(Mutant)
+  module Mutant
+    module Inflecto
       ::Inflecto.singleton_methods.each do |name|
         define_singleton_method name, ::Inflecto.method(name).to_proc
       end
