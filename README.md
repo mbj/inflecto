@@ -32,7 +32,7 @@ Credits
 
 The rails, merb & datamapper team
 
-The current maintainer is Markus Schirp ([mbj](https://github.com/mbj)) with help from [indirekj](https://github.com/indirekj).
+The current maintainer is Markus Schirp ([mbj](https://github.com/mbj)) with help from [indrekj](https://github.com/indrekj).
 
 Contributing
 -------------
