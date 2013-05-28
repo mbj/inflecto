@@ -286,7 +286,7 @@ module Inflecto
     camelize(singularize(table_name.sub(/.*\./, '')))
   end
 
-  # Detects uncountable words
+  # Test if word is uncountable
   #
   # @example
   #
