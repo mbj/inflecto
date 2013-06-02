@@ -14,12 +14,10 @@ rvm:
 notifications:
   irc:
     channels:
-      - "irc.freenode.org#datamapper"
+      - "irc.freenode.org#rom-rb"
     on_success: never
     on_failure: change
   email:
-    recipients:
-      - mbj@seonic.net
     on_success: never
     on_failure: change
 matrix:
