@@ -8,6 +8,7 @@ Gem::Specification.new do |gem|
   gem.description = 'Inflector for strings'
   gem.summary     = gem.description
   gem.homepage    = 'https://github.com/mbj/inflecto'
+  gem.license     = 'MIT'
 
   gem.require_paths    = %w[lib]
   gem.files            = `git ls-files`.split($/)
