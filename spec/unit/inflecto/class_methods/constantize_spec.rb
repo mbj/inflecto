@@ -27,6 +27,12 @@ describe Inflecto, '.constantize' do
     }.to raise_error(NameError)
   end
 
+  it 'raises exception when empty string given' do
+    expect {
+      Inflecto.constantize(i(''))
+    }.to raise_error(NameError)
+  end
+
   it 'raises exception when constant not found' do
     expect {
       Inflecto.constantize(i('Qwerty'))

@@ -1,3 +1,4 @@
+require 'pry'
 # The Inflecto transforms words from singular to plural, class names to table names, modularized class names to ones without,
 # and class names to foreign keys. The default inflections for pluralization, singularization, and uncountable words are kept
 # in inflections.rb.
@@ -117,7 +118,7 @@ module Inflecto
   #
   def self.constantize(input)
     names = input.split('::')
-    names.shift if names.any? and names.first.empty?
+    names.shift if names.first.empty?
 
     names.inject(Object) do |constant, name|
       if constant.const_defined?(name, *EXTRA_CONST_ARGS)
