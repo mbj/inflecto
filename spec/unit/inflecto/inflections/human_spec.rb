@@ -4,8 +4,8 @@ describe Inflecto::Inflections, '#human' do
   subject { object.human(rule, replacement) }
 
   let(:object)      { described_class.new }
-  let(:rule)        { mock(:rule) }
-  let(:replacement) { mock(:replacement) }
+  let(:rule)        { double(:rule) }
+  let(:replacement) { double(:replacement) }
 
   it { should be(object) }
 
@@ -13,7 +13,7 @@ describe Inflecto::Inflections, '#human' do
 
   it 'adds rule as a first item' do
     subject
-    object.human(mock, mock)
+    object.human(double, double)
 
     humans = object.humans
     humans.size.should be(2)

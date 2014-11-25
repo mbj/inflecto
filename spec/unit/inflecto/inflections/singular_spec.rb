@@ -4,8 +4,8 @@ describe Inflecto::Inflections, '#singular' do
   subject { object.singular(rule, replacement) }
 
   let(:object)      { described_class.new }
-  let(:rule)        { mock(:rule) }
-  let(:replacement) { mock(:replacement) }
+  let(:rule)        { double(:rule) }
+  let(:replacement) { double(:replacement) }
 
   it { should be(object) }
 
@@ -13,7 +13,7 @@ describe Inflecto::Inflections, '#singular' do
 
   it 'adds rule as a first item' do
     subject
-    object.singular(mock, mock)
+    object.singular(double, double)
 
     singulars = object.singulars
     singulars.size.should be(2)

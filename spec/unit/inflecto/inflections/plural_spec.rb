@@ -4,8 +4,8 @@ describe Inflecto::Inflections, '#plural' do
   subject { object.plural(rule, replacement) }
 
   let(:object)      { described_class.new }
-  let(:rule)        { mock(:rule) }
-  let(:replacement) { mock(:replacement) }
+  let(:rule)        { double(:rule) }
+  let(:replacement) { double(:replacement) }
 
   it { should be(object) }
 
@@ -13,7 +13,7 @@ describe Inflecto::Inflections, '#plural' do
 
   it 'adds rule as a first item' do
     subject
-    object.plural(mock, mock)
+    object.plural(double, double)
 
     plurals = object.plurals
     plurals.size.should be(2)
