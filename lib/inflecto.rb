@@ -79,7 +79,7 @@ module Inflecto
   # @api public
   #
   def self.demodulize(input)
-    input.gsub(/\A.*::/, '')
+    input.sub(/\A.*::/, '')
   end
 
   # Creates a foreign key name

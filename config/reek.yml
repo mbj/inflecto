@@ -68,7 +68,8 @@ TooManyStatements:
   enabled: true
   exclude:
   - each
-  - Inflecto#self.underscore
+  - 'Inflecto#self.underscore'
+  - 'Inflecto#self.ordinalize'
   max_statements: 5
 UncommunicativeMethodName:
   enabled: true

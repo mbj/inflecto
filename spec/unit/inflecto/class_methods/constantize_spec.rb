@@ -27,6 +27,24 @@ describe Inflecto, '.constantize' do
     }.to raise_error(NameError)
   end
 
+  it 'searches in const_missing' do
+    module Foo
+      class Bar
+        def self.const_missing(name)
+          name.to_s == 'Const' ? Baz : super
+        end
+      end
+
+      class Baz < Bar; end
+
+      def self.const_missing(name)
+        name.to_s == 'Autoloaded' ? Bar : super
+      end
+    end
+
+    Inflecto.constantize(i('Foo::Autoloaded::Const')).should == Foo::Baz
+  end
+
   it 'raises exception when empty string given' do
     expect {
       Inflecto.constantize(i(''))

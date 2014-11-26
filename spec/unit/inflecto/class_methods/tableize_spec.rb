@@ -17,8 +17,8 @@ describe Inflecto, '.tableize' do
     Inflecto.tableize(i('EnlargedTestis')).should == 'enlarged_testes'
   end
 
-  it 'replaces :: with underscores: Fancy::Category => fancy_categories' do
-    Inflecto.tableize(i('Fancy::Category')).should == 'fancy_categories'
+  it 'replaces :: with underscores: My::Fancy::Category => my_fancy_categories' do
+    Inflecto.tableize(i('My::Fancy::Category')).should == 'my_fancy_categories'
   end
 
   it 'underscores CamelCase strings before pluralization: Enlarged::Testis => enlarged_testes' do
