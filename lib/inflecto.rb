@@ -16,7 +16,7 @@ module Inflecto
   #
   # @example
   #   Inflecto.camelize("data_mapper")        # => "DataMapper"
-  #   Inflecto.camelize("data_mapper/errors") # => "DataMApper::Errors"
+  #   Inflecto.camelize("data_mapper/errors") # => "DataMapper::Errors"
   #
   # @return [String]
   #
