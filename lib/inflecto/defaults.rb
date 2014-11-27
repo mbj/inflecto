@@ -54,5 +54,5 @@ Inflecto.inflections do |inflect|
   inflect.irregular('move', 'moves')
   inflect.irregular('cow', 'cows')
 
-  inflect.uncountable(%w(hovercraft moose milk rain Swiss grass equipment information rice money species series fish sheep jeans))
+  inflect.uncountable(%w(hovercraft moose milk rain swiss grass equipment information rice money species series fish sheep jeans))
 end

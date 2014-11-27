@@ -152,7 +152,6 @@ module Inflecto
         when 1; "#{number}st"
         when 2; "#{number}nd"
         when 3; "#{number}rd"
-        else    "#{number}th"
       end
     end
   end
