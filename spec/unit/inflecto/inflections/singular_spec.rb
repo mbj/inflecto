@@ -24,7 +24,7 @@ describe Inflecto::Inflections, '#singular' do
     before { object.uncountable(rule) }
 
     it 'removes it from uncountables' do
-      subject.uncountables.should eq([])
+      subject.uncountables.should be_empty
     end
   end
 
@@ -32,7 +32,7 @@ describe Inflecto::Inflections, '#singular' do
     before { object.uncountable(replacement) }
 
     it 'removes it from uncountables' do
-      subject.uncountables.should eq([])
+      subject.uncountables.should be_empty
     end
   end
 end

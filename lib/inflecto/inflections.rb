@@ -70,7 +70,7 @@ module Inflecto
       @plurals      = RulesCollection.new
       @singulars    = RulesCollection.new
       @humans       = RulesCollection.new
-      @uncountables = []
+      @uncountables = Set[]
     end
 
     # Add a new plural role
@@ -149,7 +149,7 @@ module Inflecto
     # @api private
     #
     def uncountable(*words)
-      @uncountables.concat(words.flatten)
+      @uncountables.merge(words.flatten)
       self
     end
 
