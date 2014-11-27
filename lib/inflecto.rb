@@ -59,7 +59,7 @@ module Inflecto
   # @api public
   #
   def self.dasherize(input)
-    input.gsub(/_/, '-')
+    input.tr('_', '-')
   end
 
   # Return unscoped constant name
@@ -234,7 +234,7 @@ module Inflecto
   def self.humanize(input)
     result = inflections.humans.apply_to(input)
     result.gsub!(/_id\z/, "")
-    result.gsub!(/_/, " ")
+    result.tr!('_', " ")
     result.capitalize!
     result
   end
