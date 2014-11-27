@@ -16,7 +16,7 @@ module Inflecto
   #
   # @example
   #   Inflecto.camelize("data_mapper")        # => "DataMapper"
-  #   Inflecto.camelize("data_mapper/errors") # => "DataMApper::Errors"
+  #   Inflecto.camelize("data_mapper/errors") # => "DataMapper::Errors"
   #
   # @return [String]
   #
@@ -79,7 +79,7 @@ module Inflecto
   # @api public
   #
   def self.demodulize(input)
-    input.gsub(/\A.*::/, '')
+    input.sub(/\A.*::/, '')
   end
 
   # Creates a foreign key name
@@ -117,7 +117,7 @@ module Inflecto
   #
   def self.constantize(input)
     names = input.split('::')
-    names.shift if names.any? and names.first.empty?
+    names.shift if names.first.empty?
 
     names.inject(Object) do |constant, name|
       if constant.const_defined?(name, *EXTRA_CONST_ARGS)

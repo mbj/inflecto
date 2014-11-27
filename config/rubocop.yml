@@ -1,0 +1,7 @@
+AllCops:
+  Exclude:
+    - 'lib/**/*'
+    - 'spec/**/*'
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'inflecto.gemspec'
