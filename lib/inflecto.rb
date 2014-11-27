@@ -85,14 +85,14 @@ module Inflecto
   #
   # @example
   #
-  #   Inflecto.foreign_key("Message) => "message_id"
+  #   Inflecto.foreign_key("Message") => "message_id"
   #
   # @return [String]
   #
   # @api public
   #
   def self.foreign_key(input)
-    "#{underscore(demodulize(input))}_id"
+    "#{underscorize(demodulize(input))}_id"
   end
 
   EXTRA_CONST_ARGS = (RUBY_VERSION < '1.9' ? [] : [ false ]).freeze
@@ -248,9 +248,9 @@ module Inflecto
   #
   # @example
   #
-  #   Inflecto.tabelize("RawScaledScorer") # => "raw_scaled_scorers"
-  #   Inflecto.tabelize("egg_and_ham")     # => "egg_and_hams"
-  #   Inflecto.tabelize("fancyCategory")   # => "fancy_categories"
+  #   Inflecto.tableize("RawScaledScorer") # => "raw_scaled_scorers"
+  #   Inflecto.tableize("egg_and_ham")     # => "egg_and_hams"
+  #   Inflecto.tableize("fancyCategory")   # => "fancy_categories"
   #
   # @return [String]
   #
