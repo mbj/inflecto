@@ -1,4 +1,4 @@
 ---
 name: inflecto
 namespace: Inflecto
-expect_coverage: 99
+expect_coverage: 99.09
