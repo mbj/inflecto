@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Inflecto, '.uncountable?' do
   it 'truthy when empty string' do
-    Inflecto.uncountable?('').should == true
+    Inflecto.uncountable?('').should be(true)
   end
 
   it 'truthy when word is present in list' do
