@@ -5,16 +5,16 @@ describe Inflecto::Inflections, '#uncountable' do
 
   context 'when word given' do
     subject { object.uncountable('water') }
-    its(:uncountables) { should contain_exactly('water') }
+    its(:uncountables) { should eql(Set['water']) }
   end
 
   context 'when array of words given' do
     subject { object.uncountable(['water', 'sugar']) }
-    its(:uncountables) { should contain_exactly('water', 'sugar') }
+    its(:uncountables) { should eql(Set['water', 'sugar']) }
   end
 
   context 'when multiple words given' do
     subject { object.uncountable('water', 'sugar') }
-    its(:uncountables) { should contain_exactly('water', 'sugar') }
+    its(:uncountables) { should eql(Set['water', 'sugar']) }
   end
 end

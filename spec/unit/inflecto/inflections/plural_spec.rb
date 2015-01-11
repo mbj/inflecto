@@ -24,7 +24,7 @@ describe Inflecto::Inflections, '#plural' do
     before { object.uncountable(rule) }
 
     it 'removes it from uncountables' do
-      subject.uncountables.should be_empty
+      subject.uncountables.should eql(Set[])
     end
   end
 
@@ -32,7 +32,7 @@ describe Inflecto::Inflections, '#plural' do
     before { object.uncountable(replacement) }
 
     it 'removes it from uncountables' do
-      subject.uncountables.should be_empty
+      subject.uncountables.should eql(Set[])
     end
   end
 end
