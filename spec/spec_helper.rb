@@ -1,17 +1,9 @@
 # encoding: utf-8
 
-require 'devtools'
-
-Devtools.init_spec_helper
+require 'devtools/spec_helper'
 
 if ENV['COVERAGE'] == 'true'
   require 'simplecov'
-  require 'coveralls'
-
-  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    SimpleCov::Formatter::HTMLFormatter,
-    Coveralls::SimpleCov::Formatter
-  ]
 
   SimpleCov.start do
     command_name     'spec:unit'

@@ -95,8 +95,6 @@ module Inflecto
     "#{underscorize(demodulize(input))}_id"
   end
 
-  EXTRA_CONST_ARGS = (RUBY_VERSION < '1.9' ? [] : [ false ]).freeze
-
   # Find a constant with the name specified in the argument string
   #
   # The name is assumed to be the one of a top-level constant, constant scope of caller is igored
@@ -117,7 +115,7 @@ module Inflecto
     names.shift if names.first.empty?
 
     names.inject(Object) do |constant, name|
-      if constant.const_defined?(name, *EXTRA_CONST_ARGS)
+      if constant.const_defined?(name, false)
         constant.const_get(name)
       else
         constant.const_missing(name)

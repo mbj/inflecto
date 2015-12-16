@@ -86,7 +86,8 @@ module Inflecto
     # @api private
     #
     def plural(rule, replacement)
-      rule(rule, replacement, @plurals)
+      rule(rule, replacement, plurals)
+
       self
     end
 
@@ -103,7 +104,8 @@ module Inflecto
     # @api private
     #
     def singular(rule, replacement)
-      rule(rule, replacement, @singulars)
+      rule(rule, replacement, singulars)
+
       self
     end
 
@@ -125,10 +127,12 @@ module Inflecto
     # @api private
     #
     def irregular(singular, plural)
-      @uncountables.delete(singular)
-      @uncountables.delete(plural)
-      add_irregular(singular, plural, @plurals)
-      add_irregular(plural, singular, @singulars)
+      uncountables.delete(singular)
+      uncountables.delete(plural)
+
+      add_irregular(singular, plural, plurals)
+      add_irregular(plural, singular, singulars)
+
       self
     end
 
@@ -149,7 +153,8 @@ module Inflecto
     # @api private
     #
     def uncountable(*words)
-      @uncountables.merge(words.flatten)
+      uncountables.merge(words.flatten)
+
       self
     end
 
@@ -171,7 +176,7 @@ module Inflecto
     # @return [self]
     #
     def human(rule, replacement)
-      @humans.insert(0, [rule, replacement])
+      humans.insert(0, [rule, replacement])
       self
     end
 
@@ -217,8 +222,9 @@ module Inflecto
     # @api private
     #
     def rule(rule, replacement, target)
-      @uncountables.delete(rule)
-      @uncountables.delete(replacement)
+      uncountables.delete(rule)
+      uncountables.delete(replacement)
+
       target.insert(0, [rule, replacement])
     end
 
