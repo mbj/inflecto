@@ -105,21 +105,23 @@ module Inflecto
   # The name is assumed to be the one of a top-level constant, constant scope of caller is igored
   #
   # @param [String] input
+  # @param [Module] namespace
   #
   # @example
   #
   #   Inflecto.constantize("Module")            # => Module
-  #   Inflecto.constantize("DataMapper::Error") # => Test::Unit
+  #   Inflecto.constantize("Test::Unit")        # => Test::Unit
+  #   Inflecto.constantize("Unit", Test)        # => Test::Unit
   #
   # @return [Class, Module]
   #
   # @api private
   #
-  def self.constantize(input)
+  def self.constantize(input, namespace = Object)
     names = input.split('::')
     names.shift if names.first.empty?
 
-    names.inject(Object) do |constant, name|
+    names.inject(namespace) do |constant, name|
       if constant.const_defined?(name, *EXTRA_CONST_ARGS)
         constant.const_get(name)
       else
