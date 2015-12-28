@@ -56,4 +56,8 @@ describe Inflecto, '.constantize' do
       Inflecto.constantize(i('Qwerty'))
     }.to raise_error(NameError)
   end
+
+  it 'searches inside an optional namespace' do
+    Inflecto.constantize(i('Inflections'), Inflecto).should == Inflecto::Inflections
+  end
 end
