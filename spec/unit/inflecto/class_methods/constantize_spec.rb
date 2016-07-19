@@ -43,6 +43,7 @@ describe Inflecto, '.constantize' do
     end
 
     Inflecto.constantize(i('Foo::Autoloaded::Const')).should == Foo::Baz
+    Inflecto.constantize(i('Foo::Bar::Const')).should == Foo::Baz
   end
 
   it 'raises exception when empty string given' do

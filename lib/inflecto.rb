@@ -1,3 +1,5 @@
+require 'set'
+
 # The Inflecto transforms words from singular to plural, class names to table names, modularized class names to ones without,
 # and class names to foreign keys. The default inflections for pluralization, singularization, and uncountable words are kept
 # in inflections.rb.
@@ -41,13 +43,8 @@ module Inflecto
   # @api public
   #
   def self.underscore(input)
-    word = input.dup
-    word.gsub!(/::/, '/')
-    word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-    word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-    word.tr!('-', '_')
-    word.downcase!
-    word
+    word = input.gsub(/::/, '/')
+    underscorize(word)
   end
 
   # Convert input underscores to dashes
@@ -62,7 +59,7 @@ module Inflecto
   # @api public
   #
   def self.dasherize(input)
-    input.gsub(/_/, '-')
+    input.tr('_', '-')
   end
 
   # Return unscoped constant name
@@ -79,7 +76,7 @@ module Inflecto
   # @api public
   #
   def self.demodulize(input)
-    input.sub(/\A.*::/, '')
+    input.split('::').last
   end
 
   # Creates a foreign key name
@@ -88,17 +85,15 @@ module Inflecto
   #
   # @example
   #
-  #   Inflecto.foreign_key("Message) => "message_id"
+  #   Inflecto.foreign_key("Message") => "message_id"
   #
   # @return [String]
   #
-  # @api private
+  # @api public
   #
   def self.foreign_key(input)
-    "#{underscore(demodulize(input))}_id"
+    "#{underscorize(demodulize(input))}_id"
   end
-
-  EXTRA_CONST_ARGS = (RUBY_VERSION < '1.9' ? [] : [ false ]).freeze
 
   # Find a constant with the name specified in the argument string
   #
@@ -113,20 +108,22 @@ module Inflecto
   #
   # @return [Class, Module]
   #
-  # @api private
+  # @api public
   #
   def self.constantize(input)
     names = input.split('::')
     names.shift if names.first.empty?
 
     names.inject(Object) do |constant, name|
-      if constant.const_defined?(name, *EXTRA_CONST_ARGS)
+      if constant.const_defined?(name, false)
         constant.const_get(name)
       else
         constant.const_missing(name)
       end
     end
   end
+
+  ORDINALIZE_TH = (4..16).to_set.freeze
 
   # Convert a number into an ordinal string
   #
@@ -141,19 +138,18 @@ module Inflecto
   #
   # @return [String]
   #
-  # @api private
+  # @api public
   #
   def self.ordinalize(number)
     abs_value = number.abs
 
-    if (11..13).include?(abs_value % 100)
+    if ORDINALIZE_TH.include?(abs_value % 100)
       "#{number}th"
     else
       case abs_value % 10
         when 1; "#{number}st"
         when 2; "#{number}nd"
         when 3; "#{number}rd"
-        else    "#{number}th"
       end
     end
   end
@@ -231,12 +227,12 @@ module Inflecto
   #
   # @return [String]
   #
-  # @api private
+  # @api public
   #
   def self.humanize(input)
     result = inflections.humans.apply_to(input)
     result.gsub!(/_id\z/, "")
-    result.gsub!(/_/, " ")
+    result.tr!('_', " ")
     result.capitalize!
     result
   end
@@ -250,16 +246,17 @@ module Inflecto
   #
   # @example
   #
-  #   Inflecto.tabelize("RawScaledScorer") # => "raw_scaled_scorers"
-  #   Inflecto.tabelize("egg_and_ham")     # => "egg_and_hams"
-  #   Inflecto.tabelize("fancyCategory")   # => "fancy_categories"
+  #   Inflecto.tableize("RawScaledScorer") # => "raw_scaled_scorers"
+  #   Inflecto.tableize("egg_and_ham")     # => "egg_and_hams"
+  #   Inflecto.tableize("fancyCategory")   # => "fancy_categories"
   #
   # @return [String]
   #
-  # @api private
+  # @api public
   #
   def self.tableize(input)
-    pluralize(underscore(input).gsub('/', '_'))
+    word = input.gsub(/::/, '_')
+    pluralize(underscorize(word))
   end
 
   # Classify input
@@ -279,7 +276,7 @@ module Inflecto
   #
   # @return [String]
   #
-  # @api private
+  # @api public
   #
   def self.classify(table_name)
     # strip out any leading schema name
@@ -298,12 +295,35 @@ module Inflecto
   # @return [Boolean]
   #   true, if word is uncountable
   #
-  # @api private
+  # @api public
   #
   def self.uncountable?(word)
     word.empty? || inflections.uncountables.include?(word.downcase)
   end
-  private_class_method :uncountable?
+
+  # Convert input to underscored, lowercase string
+  #
+  # Contains main logic for .underscore and .tableize
+  # Does nothing with '::' divider
+  #
+  # @param [String] input
+  #
+  # @example
+  #   Inflecto.underscorize("DataMapper")         # => "data_mapper"
+  #   Inflecto.underscorize("DataMapper::Errors") # => "data_mapper::errors"
+  #
+  # @return [String]
+  #
+  # @api private
+  #
+  def self.underscorize(word)
+    word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+    word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+    word.tr!('-', '_')
+    word.downcase!
+    word
+  end
+  private_class_method :underscorize
 end
 
 require 'inflecto/rules_collection'
