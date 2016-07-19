@@ -9,7 +9,7 @@ describe Inflecto, '.inflections' do
         yielded = inflect
       end
 
-      yielded.should eq(Inflecto::Inflections.instance)
+      yielded.should be(Inflecto::Inflections.instance)
     end
   end
 
