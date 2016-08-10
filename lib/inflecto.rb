@@ -97,14 +97,14 @@ module Inflecto
 
   # Find a constant with the name specified in the argument string
   #
-  # The name is assumed to be the one of a top-level constant, constant scope of caller is igored
+  # The name is assumed to be the one of a top-level constant, constant scope of caller is ignored
   #
   # @param [String] input
   #
   # @example
   #
   #   Inflecto.constantize("Module")            # => Module
-  #   Inflecto.constantize("DataMapper::Error") # => Test::Unit
+  #   Inflecto.constantize("DataMapper::Error") # => DataMapper::Error
   #
   # @return [Class, Module]
   #
