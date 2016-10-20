@@ -329,3 +329,4 @@ end
 require 'inflecto/rules_collection'
 require 'inflecto/inflections'
 require 'inflecto/defaults'
+require 'inflecto/refinements' if RUBY_VERSION >= '2.0.0'
