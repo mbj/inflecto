@@ -272,7 +272,7 @@ module Inflecto
   #   Inflecto.classify("posts")        # => "Post"
   #
   #   # Singular names are not handled correctly:
-  #   Inflecto.classify("business")     # => "Busines"
+  #   Inflecto.classify("business")     # => "Business"
   #
   # @return [String]
   #
